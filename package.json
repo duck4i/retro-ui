@@ -1,0 +1,21 @@
+{
+  "name": "retro-llama",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Retro Llama and retro UI components",
+  "scripts": {
+    "dev": "pnpm --filter @duck4i/retro-llama dev",
+    "build": "pnpm --filter @duck4i/retro-core build",
+    "build:demo": "pnpm --filter @duck4i/retro-core build",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/node": "^22.10.5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
