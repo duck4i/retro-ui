@@ -1,4 +1,4 @@
-import { RetroApp, RetroWindow, RetroButton, RetroText } from '@duck4i/retro-ui';
+import { RetroApp, RetroWindow, RetroWindowProvider, RetroButton, RetroText } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
@@ -7,7 +7,7 @@ export default function DemoApp() {
             <h1>@duck4i/retro-llama</h1>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 800, height: 600 }}>
                 <RetroApp>
-
+                    <RetroWindowProvider>
                     <RetroWindow title="Window 1" onClose={() => { }} >
                         <RetroText label='Hello' />
                         <RetroButton label='Button' onClick={() => { }} />
@@ -20,6 +20,11 @@ export default function DemoApp() {
                         <RetroText label='Hello' />
                     </RetroWindow>
 
+
+                    <RetroWindow title="Window 3" onClose={() => { }} >
+                        <RetroText label='Hello' />
+                    </RetroWindow>
+                    </RetroWindowProvider>
                 </RetroApp>
             </div>
         </div>

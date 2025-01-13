@@ -16,6 +16,7 @@
 }
 
 .retro-app {
+    position: relative;
     font-family: "monospace";
     font-size: small;
     display: flex;
@@ -30,10 +31,11 @@
 /** Window **/
 
 .retro-draggable-window {
-    position: relative;
+    position: absolute;
+    border: outset 1px var(--retro-border-light);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: var(--retro-bg-color);
-    width: 300px;
+    width: 400px;
     z-index: 1000;
     box-shadow: 15px 15px 0px #000000b8;
 }

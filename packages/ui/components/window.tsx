@@ -1,5 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, createContext, useContext } from 'react';
 import "../global.css";
+
+interface WindowContextType {
+    topZIndex: number;
+    bringToFront: () => number;
+}
+
+const RetroWindowContext = createContext<WindowContextType | null>(null);
+
+export function RetroWindowProvider({ children }: { children: React.ReactNode }) {
+    const [topZIndex, setTopZIndex] = useState(1000);
+
+    const bringToFront = () => {
+        setTopZIndex(prev => prev + 1);
+        return topZIndex + 1;
+    };
+
+    return (
+        <RetroWindowContext.Provider value={{ topZIndex, bringToFront }}>
+            {children}
+        </RetroWindowContext.Provider>
+    );
+}
 
 interface DraggableWindowProps {
     title: string;
@@ -10,10 +32,24 @@ interface DraggableWindowProps {
 }
 
 export function RetroWindow({ title, onClose, children, width, height }: DraggableWindowProps) {
+
+    const context = useContext(RetroWindowContext);
+    if (!context) {
+        console.warn("WindowProvider not found. The z-order of windows may not work correctly.");
+    }
+
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const [z, setZ] = useState(1000);
     const windowRef = useRef<HTMLDivElement>(null);
+
+    const updateZIndex = () => {
+        const newZ = context?.bringToFront();
+        if (newZ) {
+            setZ(newZ);
+        }
+    }
 
     const handleMouseDown = (e: React.MouseEvent) => {
         setIsDragging(true);
@@ -21,6 +57,7 @@ export function RetroWindow({ title, onClose, children, width, height }: Draggab
             x: e.clientX - position.x,
             y: e.clientY - position.y,
         });
+        updateZIndex();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -60,7 +97,13 @@ export function RetroWindow({ title, onClose, children, width, height }: Draggab
         <div
             ref={windowRef}
             className="retro-draggable-window"
-            style={{ top: `${position.y}px`, left: `${position.x}px`, width: width, height: height }}
+            onClick={updateZIndex}
+            style={
+                {
+                    top: `${position.y}px`, left: `${position.x}px`,
+                    width: width, height: height,
+                    zIndex: z
+                }}
         >
             <div className="title-bar" onMouseDown={handleMouseDown}>
                 <span>{title}</span>
