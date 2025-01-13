@@ -36,5 +36,7 @@ export default defineConfig({
                 }
             }
         }
-    }
+    },
+    assetsInclude: [ '**/*.ttf'],
+
 })

@@ -1,5 +1,3 @@
-/* global.module.css */
-
 :root {
     --retro-bg-color: #c0c0c0;
     --retro-border-light: #fff;
@@ -10,7 +8,7 @@
     --retro-button-bg: #ffffff;
     --retro-button-bg-disabled: #848484;
     --retro-button-text: #000000;
-    --retro-window-bg: gray;
+    --retro-window-bg: rgb(111, 108, 108);
     --retro-app-bg: #00008f;
     --retro-app-text: white;
     --retro-font: 'Perfect DOS VGA 437', 'monospace';
@@ -18,8 +16,8 @@
 
 .retro-app {
     position: relative;
-    font-family: "monospace";
-    font-size: small;
+    font-family: var(--retro-font);
+    font-size: normal;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -73,6 +71,7 @@
 .retro-draggable-window .title-bar button:focus {
     font-weight: bold;
     border: none;
+    outline: none;
 }
 
 .window-content {

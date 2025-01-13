@@ -22,7 +22,7 @@ export default function DemoApp() {
                         </RetroWindow>
 
                         <RetroWindow title="Label styles" onClose={() => { }} x={150} y={150}>
-                            <RetroText label='Hello' bold />
+                            <RetroText label='Hello'  />
                             <RetroText label='Hello' bold blink />
                             <RetroText label='Hello' inverse />
                         </RetroWindow>

@@ -1,3 +1,4 @@
+import "../fonts.css";
 import "../global.css";
 
 export interface AppProps {
