@@ -25,13 +25,15 @@ export function RetroWindowProvider({ children }: { children: React.ReactNode })
 
 interface DraggableWindowProps {
     title: string;
+    x?: number;
+    y?: number;
     width?: number;
     height?: number;
     onClose: () => void;
     children?: React.ReactNode;
 }
 
-export function RetroWindow({ title, onClose, children, width, height }: DraggableWindowProps) {
+export function RetroWindow({ title, onClose, children, x, y, width, height }: DraggableWindowProps) {
 
     const context = useContext(RetroWindowContext);
     if (!context) {
@@ -39,7 +41,7 @@ export function RetroWindow({ title, onClose, children, width, height }: Draggab
     }
 
     const [isDragging, setIsDragging] = useState(false);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [position, setPosition] = useState({ x: x ?? 0, y: y ?? 0});
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [z, setZ] = useState(1000);
     const windowRef = useRef<HTMLDivElement>(null);
