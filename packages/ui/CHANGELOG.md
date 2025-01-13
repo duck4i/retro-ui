@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.2.2
+
+### Patch Changes
+
+- first components and UI
+
 ## 0.2.1
 
 ### Patch Changes

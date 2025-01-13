@@ -1,14 +1,13 @@
+import "../global.css";
 
 export interface AppProps {
     children?: React.ReactNode;
 }
 
-export function App({ children }: AppProps) {
+export function RetroApp({ children }: AppProps) {
     return (
-        <div>
-            <p>Hey react</p>
+        <div className={"app"}>
             {children}
         </div>
-
     )
 }

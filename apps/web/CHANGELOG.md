@@ -1,5 +1,13 @@
 # web
 
+## 0.2.2
+
+### Patch Changes
+
+- first components and UI
+- Updated dependencies
+  - @duck4i/retro-ui@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

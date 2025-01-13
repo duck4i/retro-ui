@@ -1,0 +1,118 @@
+/* global.module.css */
+
+:root {
+    --retro-bg-color: #c0c0c0;
+    --retro-border-light: #fff;
+    --retro-border-dark: #808080;
+    --retro-text-color: #000;
+    --retro-title-bar-bg: #0078d4;
+    --retro-title-bar-text: #fff;
+    --retro-window-bg: gray;
+    --retro-app-bg: #00008f;
+    --retro-app-text: white;
+}
+
+.app {
+    font-family: monospace;
+    font-size: medium;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    color: white;
+    background-color: var(--retro-app-bg);
+    overflow: hidden;
+}
+
+/** Window **/
+
+.draggable-window {
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--retro-bg-color);
+    width: 300px;
+    z-index: 1000;
+    box-shadow: 10px 10px 0px #00000090;
+}
+
+.title-bar {
+    user-select: none;
+    background-color: var(--retro-border-dark);
+    color: #fff;
+    padding: 3px;
+    padding-left: 5px;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-bar span {
+    font-weight: bold;
+}
+
+.title-bar button {
+    user-select: none;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    color: #000;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
+}
+
+.window-content {
+    padding: 10px;
+}
+
+/* Button */
+
+.retroButton {
+    user-select: none;
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    color: #000;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    margin: 5px;
+    outline: none;
+}
+
+.retroButton:active {
+    box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
+}
+
+/* Text */
+.retroText {
+    user-select: none;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--retro-text-color);
+}
+
+.retroTextBold {
+    font-weight: bold;
+}
+
+.retroTextBlink {
+    animation: blink 1s step-start infinite;
+}
+
+.retroTextInverse {
+    background-color: var(--retro-text-color);
+    color: var(--retro-bg-color);
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

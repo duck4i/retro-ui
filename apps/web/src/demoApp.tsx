@@ -1,12 +1,23 @@
-import { App } from '@duck4i/retro-ui';
+import { RetroApp, RetroWindow, RetroButton, RetroText } from '@duck4i/retro-ui';
+import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
     return (
         <div>
             <h1>@duck4i/retro-llama</h1>
-            <App>
-                <p>Yo</p>
-            </App>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 800, height: 600 }}>
+                <RetroApp>
+
+                    <RetroWindow title="Window 1" onClose={() => { }} >
+                        <RetroText label='Hello' />
+                        <RetroButton label='Yo' onClick={() => { }} />
+                        <RetroText label='Hello' bold />
+                        <RetroText label='Hello' bold blink />
+                        <RetroText label='Hello' inverse />
+                    </RetroWindow>
+
+                </RetroApp>
+            </div>
         </div>
     )
 }

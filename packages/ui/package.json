@@ -1,12 +1,19 @@
 {
   "name": "@duck4i/retro-ui",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "style": "./dist/style.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "vite build --watch",
@@ -17,7 +24,9 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "typescript": "5.5.4",
     "vite": "^5.4.11",
@@ -27,7 +36,6 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@types/react": "^19.0.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
