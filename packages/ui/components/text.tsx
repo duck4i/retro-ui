@@ -9,7 +9,7 @@ interface RetroTextProps {
 
 export const RetroText = ({ label, bold, blink, inverse }: RetroTextProps) => {
     return (
-        <p className={`retroText ${bold ? 'retroTextBold' : ''} ${blink ? 'retroTextBlink' : ''} ${inverse ? 'retroTextInverse' : ''}`}>
+        <p className={`retro-text ${bold ? 'retro-text-bold' : ''} ${blink ? 'retro-text-blink' : ''} ${inverse ? 'retro-text-inverse' : ''}`}>
             {label}
         </p>
     );

@@ -10,10 +10,14 @@ export default function DemoApp() {
 
                     <RetroWindow title="Window 1" onClose={() => { }} >
                         <RetroText label='Hello' />
-                        <RetroButton label='Yo' onClick={() => { }} />
+                        <RetroButton label='Button' onClick={() => { }} />
                         <RetroText label='Hello' bold />
                         <RetroText label='Hello' bold blink />
                         <RetroText label='Hello' inverse />
+                    </RetroWindow>
+
+                    <RetroWindow title="Window 2" onClose={() => { }} >
+                        <RetroText label='Hello' />
                     </RetroWindow>
 
                 </RetroApp>

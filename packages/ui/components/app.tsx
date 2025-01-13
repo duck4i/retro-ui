@@ -6,7 +6,7 @@ export interface AppProps {
 
 export function RetroApp({ children }: AppProps) {
     return (
-        <div className={"app"}>
+        <div id="retro-app-root" className={"retro-app"}>
             {children}
         </div>
     )

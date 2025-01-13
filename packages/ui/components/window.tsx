@@ -25,7 +25,7 @@ export function RetroWindow({ title, onClose, children, width, height }: Draggab
 
     const handleMouseMove = (e: MouseEvent) => {
         if (isDragging) {
-            const parent = (e.target as HTMLElement).closest('.app');
+            const parent = (e.target as HTMLElement).closest('.retro-app');
             if (parent && windowRef.current) {
                 const parentRect = parent.getBoundingClientRect();
                 const windowRect = windowRef.current.getBoundingClientRect();
@@ -59,7 +59,7 @@ export function RetroWindow({ title, onClose, children, width, height }: Draggab
     return (
         <div
             ref={windowRef}
-            className="draggable-window"
+            className="retro-draggable-window"
             style={{ top: `${position.y}px`, left: `${position.x}px`, width: width, height: height }}
         >
             <div className="title-bar" onMouseDown={handleMouseDown}>

@@ -7,7 +7,7 @@ interface RetroButtonProps {
 
 export const RetroButton = ({ label, onClick }: RetroButtonProps) => {
     return (
-        <button className={"retroButton"} onClick={onClick}>
+        <button className={"retro-button"} onClick={onClick}>
             {label}
         </button>
     );

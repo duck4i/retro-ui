@@ -5,16 +5,19 @@
     --retro-border-light: #fff;
     --retro-border-dark: #808080;
     --retro-text-color: #000;
-    --retro-title-bar-bg: #0078d4;
-    --retro-title-bar-text: #fff;
+    --retro-title-bar-bg: #ffffff;
+    --retro-title-bar-text: #000000;
+    --retro-button-bg: #ffffff;
+    --retro-button-text: #000000;
     --retro-window-bg: gray;
     --retro-app-bg: #00008f;
     --retro-app-text: white;
+    --retro-font: 'Perfect DOS VGA 437', 'monospace';
 }
 
-.app {
-    font-family: monospace;
-    font-size: medium;
+.retro-app {
+    font-family: "monospace";
+    font-size: small;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -26,19 +29,19 @@
 
 /** Window **/
 
-.draggable-window {
+.retro-draggable-window {
     position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     background-color: var(--retro-bg-color);
     width: 300px;
     z-index: 1000;
-    box-shadow: 10px 10px 0px #00000090;
+    box-shadow: 15px 15px 0px #000000b8;
 }
 
-.title-bar {
+.retro-draggable-window .title-bar {
     user-select: none;
-    background-color: var(--retro-border-dark);
-    color: #fff;
+    background-color: var(--retro-title-bar-bg);
+    color: var(--retro-title-bar-text);
     padding: 3px;
     padding-left: 5px;
     cursor: grab;
@@ -47,11 +50,11 @@
     align-items: center;
 }
 
-.title-bar span {
+.retro-draggable-window .title-bar span {
     font-weight: bold;
 }
 
-.title-bar button {
+.retro-draggable-window .title-bar button {
     user-select: none;
     background: #c0c0c0;
     border: 2px solid #fff;
@@ -59,7 +62,6 @@
     border-bottom-color: #808080;
     color: #000;
     cursor: pointer;
-    font-size: 16px;
     padding: 2px 6px;
     box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
 }
@@ -70,43 +72,70 @@
 
 /* Button */
 
-.retroButton {
+.retro-button {
     user-select: none;
-    background: #c0c0c0;
-    border: 2px solid #fff;
-    border-right-color: #808080;
-    border-bottom-color: #808080;
-    color: #000;
+    background: var(--retro-button-bg);
+    color: var(--retro-button-text);
+    border: none;
+    box-shadow: 8px 8px 0px #000;
     cursor: pointer;
-    font-size: 16px;
     padding: 5px 10px;
-    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
     font-family: 'Courier New', Courier, monospace;
     text-transform: uppercase;
     margin: 5px;
     outline: none;
+    text-transform: lowercase;
 }
 
-.retroButton:active {
-    box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #fff;
-}
-
-/* Text */
-.retroText {
-    user-select: none;
-    font-family: 'Courier New', Courier, monospace;
-    color: var(--retro-text-color);
-}
-
-.retroTextBold {
+.retro-button::first-letter {
+    text-transform: uppercase;
     font-weight: bold;
 }
 
-.retroTextBlink {
+.retro-button:active {
+    box-shadow: 5px 5px 0px #000;
+    transform: translate(3px, 3px);
+}
+
+.retro-button:focus {
+    outline: none;
+    position: relative;
+}
+
+.retro-button:focus::before,
+.retro-button:focus::after {
+    content: '◀';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+}
+
+.retro-button:focus::before {
+    left: 1px;
+    content: '▶';
+}
+
+.retro-button:focus::after {
+    right: 1px;
+}
+
+
+/* Text */
+.retro-text {
+    user-select: none;
+    color: var(--retro-text-color);
+}
+
+.retro-text-bold {
+    font-weight: bold;
+}
+
+.retro-text-blink {
     animation: blink 1s step-start infinite;
 }
 
-.retroTextInverse {
+.retro-text-inverse {
     background-color: var(--retro-text-color);
     color: var(--retro-bg-color);
 }
