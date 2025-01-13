@@ -11,11 +11,15 @@
     "clean": "rm -rf dist && rm -rf .turbo"
   },
   "dependencies": {
-    "@duck4i/retro-ui": "workspace:*"
+    "@duck4i/retro-ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.3",
     "eslint": "^8.57.1",
     "typescript": "5.5.4",
     "vite": "^5.4.11"

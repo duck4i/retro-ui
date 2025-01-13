@@ -1,8 +1,9 @@
 {
   "extends": "@repo/typescript-config/base.json",
-  "include": ["components/**/*", "utils/**/*", "index.ts"],
+  "include": ["components/**/*", "index.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "outDir": "dist",
-  }
+    "jsx": "react-jsx"
+  },
 }
