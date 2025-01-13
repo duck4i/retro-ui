@@ -1,21 +1,21 @@
 {
-  "name": "retro-llama",
   "private": true,
-  "version": "1.0.0",
-  "description": "Retro Llama and retro UI components",
   "scripts": {
-    "dev": "pnpm --filter @duck4i/retro-llama dev",
-    "build": "pnpm --filter @duck4i/retro-core build",
-    "build:demo": "pnpm --filter @duck4i/retro-core build",
-    "test": "pnpm -r test"
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "clean": "turbo clean",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish": "turbo run build && changeset publish",
+    "changeset": "changeset && changeset version"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@types/node": "^22.10.5"
+    "@changesets/cli": "^2.27.11",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "5.5.4"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "packageManager": "pnpm@8.15.6",
+  "name": "with-vite"
 }
