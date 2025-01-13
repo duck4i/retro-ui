@@ -1,8 +1,8 @@
-import { Header } from "@repo/ui/header";
+import { Header } from "@duck4i/retro-ui";
 import "./style.css";
 import typescriptLogo from "/typescript.svg";
-import { Counter } from "@repo/ui/counter";
-import { setupCounter } from "@repo/ui/setup-counter";
+import { Counter } from "@duck4i/retro-ui";
+import { setupCounter } from "@duck4i/retro-ui";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>

@@ -1,13 +1,23 @@
 {
   "name": "@duck4i/retro-ui",
   "version": "0.1.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "./counter": "./components/counter.ts",
-    "./header": "./components/header.ts",
-    "./setup-counter": "./utils/counter.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf dist && rm -rf .turbo",
     "lint": "eslint \"**/*.ts\""
   },
   "devDependencies": {
@@ -18,5 +28,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@types/react": "^19.0.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
