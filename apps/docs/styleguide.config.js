@@ -18,6 +18,7 @@ module.exports = {
         ButtonGroup: './ButtonGroup',
         Text: './Text',
         Window: './Window',
+        WindowProvider: './WindowProvider',
     },
     webpackConfig: {
         module: {

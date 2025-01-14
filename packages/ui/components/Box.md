@@ -2,19 +2,14 @@
 ```js
 import { Text } from './Text';
 
-<Box>
-   <Text label="Hello" />
-</Box>
+<div>
+   <Box>
+      <Text label="I have a border" />
+   </Box>
 
-```
-
-Inset variant:
-
-```js
-import { Text } from './Text';
-
-<Box type="inset">
-   <Text label="Hello" />
-</Box>
+   <Box type="inset">
+      <Text label="I am inset" />
+   </Box>
+</div>
 
 ```
