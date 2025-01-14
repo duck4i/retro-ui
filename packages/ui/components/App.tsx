@@ -5,7 +5,10 @@ export interface AppProps {
     children?: React.ReactNode;
 }
 
-export function RetroApp({ children }: AppProps) {
+/**
+ * RetroApp component serves as a root container and provides a classic blue background for your retro app.
+ */
+export function App({ children }: AppProps) {
     return (
         <div id="retro-app-root" className={"retro-app"}>
             {children}

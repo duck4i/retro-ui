@@ -6,7 +6,8 @@ interface ButtonGroupProps {
     vertical?: boolean;
 }
 
-export function RetroButtonGroup({ vertical, children }: ButtonGroupProps) {
+/** A grouping component that renders a styled div with centered buttons and optional vertical layout. */
+export function ButtonGroup({ vertical, children }: ButtonGroupProps) {
     return (
         <div className="retro-button-group" style={{ flexDirection: vertical ? 'column' : 'row' }}>
             {children}

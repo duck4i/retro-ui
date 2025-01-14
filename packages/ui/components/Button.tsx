@@ -1,16 +1,16 @@
 import '../global.css';
 
-interface RetroButtonProps {
+interface ButtonProps {
     label: string;
     onClick: () => void;
     disabled?: boolean;
 }
 
-export const RetroButton = ({ label, disabled, onClick }: RetroButtonProps) => {
+/** A simple button component */
+export const Button = ({ label, disabled, onClick }: ButtonProps) => {
     return (
         <button className={"retro-button"} onClick={onClick} disabled={disabled}>
             {label}
         </button>
     );
 };
-

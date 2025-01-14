@@ -23,6 +23,8 @@ export default defineConfig({
                         return 'index.mjs'
                     case 'cjs':
                         return 'index.cjs'
+                    default:
+                        return 'index.js';
                 }
             }
         },
@@ -37,6 +39,6 @@ export default defineConfig({
             }
         }
     },
-    assetsInclude: [ '**/*.ttf'],
+    assetsInclude: ['**/*.ttf'],
 
 })

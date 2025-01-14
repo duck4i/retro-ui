@@ -1,29 +1,8 @@
-import React, { useState, useRef, useEffect, createContext, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { WindowContext } from './WindowProvider';
 import "../global.css";
 
-interface WindowContextType {
-    topZIndex: number;
-    bringToFront: () => number;
-}
-
-const RetroWindowContext = createContext<WindowContextType | null>(null);
-
-export function RetroWindowProvider({ children }: { children: React.ReactNode }) {
-    const [topZIndex, setTopZIndex] = useState(1000);
-
-    const bringToFront = () => {
-        setTopZIndex(prev => prev + 1);
-        return topZIndex + 1;
-    };
-
-    return (
-        <RetroWindowContext.Provider value={{ topZIndex, bringToFront }}>
-            {children}
-        </RetroWindowContext.Provider>
-    );
-}
-
-interface DraggableWindowProps {
+export interface WindowProps {
     title: string;
     x?: number;
     y?: number;
@@ -33,9 +12,12 @@ interface DraggableWindowProps {
     children?: React.ReactNode;
 }
 
-export function RetroWindow({ title, children, x, y, width, height, onClose }: DraggableWindowProps) {
+/**
+ * A draggable window component with retro feel
+ */
+export function Window({ title, children, x, y, width, height, onClose }: WindowProps) {
 
-    const context = useContext(RetroWindowContext);
+    const context = useContext(WindowContext);
     if (!context) {
         console.warn("WindowProvider not found. The z-order of windows may not work correctly.");
     }
