@@ -1,0 +1,206 @@
+@font-face {
+    font-family: "Perfect DOS VGA 437";
+    src: url("./assets/Perfect_DOS_VGA_437.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --retro-font: 'Perfect DOS VGA 437', 'monospace';
+    --retro-bg-color: #c0c0c0;
+    --retro-border-light: #fff;
+    --retro-border-dark: #808080;
+    --retro-text-color: #000;
+    --retro-title-bar-bg: #ffffff;
+    --retro-title-bar-text: #000000;
+    --retro-button-bg: #ffffff;
+    --retro-button-bg-disabled: #848484;
+    --retro-button-text: #000000;
+    --retro-window-bg: rgb(111, 108, 108);
+    --retro-app-bg: #00008f;
+    --retro-app-text: white;
+    --retro-box-border: #000;
+    --retro-box-border-inset: #fff;
+}
+
+.app {
+    position: relative;
+    font-family: var(--retro-font);
+    font-size: normal;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    color: white;
+    background-color: var(--retro-app-bg);
+    overflow: hidden;
+}
+
+/** Window **/
+
+.window {
+    position: absolute;
+    border: outset 1px var(--retro-border-light);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--retro-bg-color);
+    width: 400px;
+    z-index: 1000;
+    box-shadow: 15px 15px 0px #000000b8;
+}
+
+.window .titleBar {
+    user-select: none;
+    background-color: var(--retro-title-bar-bg);
+    color: var(--retro-title-bar-text);
+    padding: 3px;
+    padding-left: 5px;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.window .titleBar span {
+    font-weight: bold;
+}
+
+.window .titleBar button {
+    user-select: none;
+    background: #c0c0c000;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.window .titleBar button:active {
+    transform: translate(3px, 3px);
+}
+
+.window .titleBar button:focus {
+    font-weight: bold;
+    border: none;
+    outline: none;
+    text-decoration: underline;
+}
+
+.window  .windowContent {
+    padding: 10px;
+}
+
+/* Button */
+
+.button {
+    user-select: none;
+    background: var(--retro-button-bg);
+    color: var(--retro-button-text);
+    border: none;
+    box-shadow: 8px 8px 0px #000;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 5px;
+    outline: none;
+    text-transform: lowercase;
+}
+
+.button::first-letter {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.button:active {
+    box-shadow: 5px 5px 0px #000;
+    transform: translate(3px, 3px);
+}
+
+.button:disabled {
+    background: var(--retro-button-bg-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.button:focus {
+    outline: none;
+    position: relative;
+}
+
+.button:focus::before,
+.button:focus::after {
+    content: '◀';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+}
+
+.button:focus::before {
+    left: 1px;
+    content: '▶';
+}
+
+.button:focus::after {
+    right: 1px;
+}
+
+/* Button group */
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    gap: 5px;
+}
+
+/* Text */
+.text {
+    padding: 3px;
+    user-select: none;
+    color: var(--retro-text-color);
+}
+
+.text p {
+    padding: 0;
+    margin: 0;
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+.textBlink {
+    animation: blink 1s step-start infinite;
+}
+
+.textInverse {
+    background-color: var(--retro-text-color);
+    color: var(--retro-bg-color);
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Box */
+
+.box {
+    display: flex;
+    justify-content: center;
+    background-color: var(--retro-bg-color);
+    padding: 5px;
+    margin: 5px;
+}
+
+.boxBorder {
+    border: 1px solid var(--retro-box-border);
+    border-right: 3px solid var(--retro-box-border);
+    border-bottom: 3px solid var(--retro-box-border);
+}
+
+.boxInset {
+    border: 1px solid var(--retro-box-border);
+    border-right: 2px solid  var(--retro-box-border-inset);
+    border-bottom: 2px solid var(--retro-box-border-inset);
+}
