@@ -1,4 +1,5 @@
 :root {
+    --retro-font: 'Perfect DOS VGA 437', 'monospace';
     --retro-bg-color: #c0c0c0;
     --retro-border-light: #fff;
     --retro-border-dark: #808080;
@@ -11,7 +12,8 @@
     --retro-window-bg: rgb(111, 108, 108);
     --retro-app-bg: #00008f;
     --retro-app-text: white;
-    --retro-font: 'Perfect DOS VGA 437', 'monospace';
+    --retro-box-border: #000;
+    --retro-box-border-inset: #fff;
 }
 
 .retro-app {
@@ -72,6 +74,7 @@
     font-weight: bold;
     border: none;
     outline: none;
+    text-decoration: underline;
 }
 
 .window-content {
@@ -143,6 +146,8 @@
 
 /* Text */
 .retro-text {
+    padding-left: 5px;
+    padding-right: 5px;
     user-select: none;
     color: var(--retro-text-color);
 }
@@ -164,4 +169,26 @@
     50% {
         opacity: 0;
     }
+}
+
+/* Box */
+
+.retro-box {
+    display: flex;
+    justify-content: center;
+    background-color: var(--retro-bg-color);
+    padding: 5px;
+    margin: 5px;
+}
+
+.retro-box-border {
+    border: 1px solid var(--retro-box-border);
+    border-right: 3px solid var(--retro-box-border);
+    border-bottom: 3px solid var(--retro-box-border);
+}
+
+.retro-box-inset {
+    border: 1px solid var(--retro-box-border);
+    border-right: 2px solid  var(--retro-box-border-inset);
+    border-bottom: 2px solid var(--retro-box-border-inset);
 }

@@ -1,4 +1,4 @@
-import { RetroApp, RetroWindow, RetroWindowProvider, RetroButton, RetroText, RetroButtonGroup } from '@duck4i/retro-ui';
+import { RetroApp, RetroWindow, RetroWindowProvider, RetroButton, RetroText, RetroButtonGroup, RetroBox } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
@@ -22,13 +22,19 @@ export default function DemoApp() {
                         </RetroWindow>
 
                         <RetroWindow title="Label styles" onClose={() => { }} x={150} y={150}>
-                            <RetroText label='Hello'  />
+                            <RetroText label='Hello' />
                             <RetroText label='Hello' bold blink />
                             <RetroText label='Hello' inverse />
                         </RetroWindow>
 
                         <RetroWindow title="Window 3" x={250} y={250} onClose={() => { }} >
-                            <RetroText label='Hello' />
+                            <RetroBox>
+                                <RetroText label='Box Border' />
+                            </RetroBox>
+                            <RetroBox type='inset' vertical>
+                                <RetroText label='Box inset' />
+                                <RetroButton label='Button' onClick={() => { }} />
+                            </RetroBox>
                         </RetroWindow>
                     </RetroWindowProvider>
                 </RetroApp>
