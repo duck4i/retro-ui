@@ -1,4 +1,4 @@
-import '../global.css';
+import styles from '../global.module.css';
 
 interface ButtonProps {
     label: string;
@@ -9,7 +9,7 @@ interface ButtonProps {
 /** A simple button component */
 export const Button = ({ label, disabled, onClick }: ButtonProps) => {
     return (
-        <button className={"retro-button"} onClick={onClick} disabled={disabled}>
+        <button className={styles.button} onClick={onClick} disabled={disabled}>
             {label}
         </button>
     );

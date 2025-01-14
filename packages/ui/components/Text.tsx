@@ -1,4 +1,4 @@
-import '../global.css';
+import styles from '../global.module.css';
 
 interface TextProps {
     label: string;
@@ -10,7 +10,13 @@ interface TextProps {
 /** A simple label component with bold, blink and inverse decorators */
 export const Text = ({ label, bold, blink, inverse }: TextProps) => {
     return (
-        <div className={`retro-text ${bold ? 'retro-text-bold' : ''} ${blink ? 'retro-text-blink' : ''} ${inverse ? 'retro-text-inverse' : ''}`}>
+        <div className={[
+            styles.text,
+            bold ? styles.textBold : '',
+            blink ? styles.textBlink : '',
+            inverse ? styles.textInverse : ''
+        ].join(' ')
+        }>
             <p>{label}</p>
         </div>
     );

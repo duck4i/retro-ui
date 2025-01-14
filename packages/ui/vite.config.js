@@ -6,11 +6,18 @@ export default defineConfig({
     plugins: [
         dts({
             insertTypesEntry: true,
-            include: ["components/**/*", "index.ts"],
+            include: ["components/**/*", "index.ts", "css.d.ts"],
             rollupTypes: true,
             outDir: 'dist',
         }),
     ],
+    css: {
+        modules: {
+            generateScopedName: 'retro-ui__[name]__[local]__[hash:base64:5]',
+            scopeBehaviour: 'local',
+            localsConvention: 'camelCase',
+        },
+    },
     build: {
         lib: {
             entry: resolve(__dirname, 'index.ts'),

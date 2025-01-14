@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { WindowContext } from './WindowProvider';
-import "../global.css";
+import styles from '../global.module.css';
 
 export interface WindowProps {
     title: string;
@@ -46,7 +46,7 @@ export function Window({ title, children, x, y, width, height, onClose }: Window
 
     const handleMouseMove = (e: MouseEvent) => {
         if (isDragging) {
-            const parent = (e.target as HTMLElement).closest('.retro-app');
+            const parent = (e.target as HTMLElement).closest("#retro-app-root");
             if (parent && windowRef.current) {
                 const parentRect = parent.getBoundingClientRect();
                 const windowRect = windowRef.current.getBoundingClientRect();
@@ -80,7 +80,7 @@ export function Window({ title, children, x, y, width, height, onClose }: Window
     return (
         <div
             ref={windowRef}
-            className="retro-draggable-window"
+            className={styles.window}
             onClick={updateZIndex}
             style={
                 {
@@ -89,11 +89,11 @@ export function Window({ title, children, x, y, width, height, onClose }: Window
                     zIndex: z
                 }}
         >
-            <div className="title-bar" onMouseDown={handleMouseDown}>
+            <div className={styles.titleBar} onMouseDown={handleMouseDown}>
                 <span>{title}</span>
                 <button onClick={onClose}>X</button>
             </div>
-            <div className="window-content">
+            <div className={styles.windowContent}>
                 {children}
             </div>
         </div>

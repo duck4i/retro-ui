@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Perfect DOS VGA 437";
+    src: url("./assets/Perfect_DOS_VGA_437.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --retro-font: 'Perfect DOS VGA 437', 'monospace';
     --retro-bg-color: #c0c0c0;
@@ -16,7 +24,7 @@
     --retro-box-border-inset: #fff;
 }
 
-.retro-app {
+.app {
     position: relative;
     font-family: var(--retro-font);
     font-size: normal;
@@ -31,7 +39,7 @@
 
 /** Window **/
 
-.retro-draggable-window {
+.window {
     position: absolute;
     border: outset 1px var(--retro-border-light);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -41,7 +49,7 @@
     box-shadow: 15px 15px 0px #000000b8;
 }
 
-.retro-draggable-window .title-bar {
+.window .titleBar {
     user-select: none;
     background-color: var(--retro-title-bar-bg);
     color: var(--retro-title-bar-text);
@@ -53,11 +61,11 @@
     align-items: center;
 }
 
-.retro-draggable-window .title-bar span {
+.window .titleBar span {
     font-weight: bold;
 }
 
-.retro-draggable-window .title-bar button {
+.window .titleBar button {
     user-select: none;
     background: #c0c0c000;
     border: none;
@@ -66,24 +74,24 @@
     padding: 2px 6px;
 }
 
-.retro-draggable-window .title-bar button:active {
+.window .titleBar button:active {
     transform: translate(3px, 3px);
 }
 
-.retro-draggable-window .title-bar button:focus {
+.window .titleBar button:focus {
     font-weight: bold;
     border: none;
     outline: none;
     text-decoration: underline;
 }
 
-.window-content {
+.window  .windowContent {
     padding: 10px;
 }
 
 /* Button */
 
-.retro-button {
+.button {
     user-select: none;
     background: var(--retro-button-bg);
     color: var(--retro-button-text);
@@ -97,29 +105,29 @@
     text-transform: lowercase;
 }
 
-.retro-button::first-letter {
+.button::first-letter {
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.retro-button:active {
+.button:active {
     box-shadow: 5px 5px 0px #000;
     transform: translate(3px, 3px);
 }
 
-.retro-button:disabled {
+.button:disabled {
     background: var(--retro-button-bg-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }
 
-.retro-button:focus {
+.button:focus {
     outline: none;
     position: relative;
 }
 
-.retro-button:focus::before,
-.retro-button:focus::after {
+.button:focus::before,
+.button:focus::after {
     content: '◀';
     position: absolute;
     top: 50%;
@@ -127,17 +135,17 @@
     font-size: 0.8em;
 }
 
-.retro-button:focus::before {
+.button:focus::before {
     left: 1px;
     content: '▶';
 }
 
-.retro-button:focus::after {
+.button:focus::after {
     right: 1px;
 }
 
 /* Button group */
-.retro-button-group {
+.buttonGroup {
     display: flex;
     justify-content: center;
     padding: 5px;
@@ -145,26 +153,26 @@
 }
 
 /* Text */
-.retro-text {
+.text {
     padding: 3px;
     user-select: none;
     color: var(--retro-text-color);
 }
 
-.retro-text p {
+.text p {
     padding: 0;
     margin: 0;
 }
 
-.retro-text-bold {
+.textBold {
     font-weight: bold;
 }
 
-.retro-text-blink {
+.textBlink {
     animation: blink 1s step-start infinite;
 }
 
-.retro-text-inverse {
+.textInverse {
     background-color: var(--retro-text-color);
     color: var(--retro-bg-color);
 }
@@ -177,7 +185,7 @@
 
 /* Box */
 
-.retro-box {
+.box {
     display: flex;
     justify-content: center;
     background-color: var(--retro-bg-color);
@@ -185,13 +193,13 @@
     margin: 5px;
 }
 
-.retro-box-border {
+.boxBorder {
     border: 1px solid var(--retro-box-border);
     border-right: 3px solid var(--retro-box-border);
     border-bottom: 3px solid var(--retro-box-border);
 }
 
-.retro-box-inset {
+.boxInset {
     border: 1px solid var(--retro-box-border);
     border-right: 2px solid  var(--retro-box-border-inset);
     border-bottom: 2px solid var(--retro-box-border-inset);

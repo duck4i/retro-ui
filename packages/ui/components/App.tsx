@@ -1,5 +1,4 @@
-import "../fonts.css";
-import "../global.css";
+import styles from "../global.module.css";
 
 export interface AppProps {
     children?: React.ReactNode;
@@ -10,7 +9,7 @@ export interface AppProps {
  */
 export function App({ children }: AppProps) {
     return (
-        <div id="retro-app-root" className={"retro-app"}>
+        <div id="retro-app-root" className={styles.app}>
             {children}
         </div>
     )

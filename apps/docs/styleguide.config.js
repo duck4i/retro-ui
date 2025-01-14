@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
     title: "@duck4i/retro-ui",
+    styleguideDir: './dist',
     components: '../../packages/ui/components/**/*.{ts,tsx}',
     /*
     sections: [
