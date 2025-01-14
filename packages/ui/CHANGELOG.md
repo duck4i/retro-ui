@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- docs added with styleguidist + refactor of components
+
 ## 0.2.3
 
 ### Patch Changes

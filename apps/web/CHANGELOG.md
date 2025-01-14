@@ -1,5 +1,16 @@
 # web
 
+## 0.3.0
+
+### Minor Changes
+
+- docs added with styleguidist + refactor of components
+
+### Patch Changes
+
+- Updated dependencies
+  - @duck4i/retro-ui@0.3.0
+
 ## 0.2.3
 
 ### Patch Changes
