@@ -1,4 +1,4 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
@@ -26,7 +26,9 @@ export default function DemoApp() {
                             <Text label='Hello' />
                             <Text label='Hello' bold blink />
                             <Text label='Hello' backgroundColor='cyan' color='white' />
-                            <BigText label='Hey bro'  backgroundColor='red' />
+                            <Scrollbar container={true} height='50px'>
+                                <BigText label='Hey bro' />
+                            </Scrollbar>
                         </Window>
 
                         <Window title="Window 3" x={250} y={250} onClose={() => { }} >
