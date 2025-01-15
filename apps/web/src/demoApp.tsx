@@ -26,11 +26,12 @@ export default function DemoApp() {
                             <Text label='Hello' />
                             <Text label='Hello' bold blink />
                             <Text label='Hello' backgroundColor='cyan' color='white' />
-                            <Scrollbar container={true} height='50px'>
+                            <Scrollbar height='50px' >
                                 <BigText label='Hey bro' />
                             </Scrollbar>
                         </Window>
 
+{false &&
                         <Window title="Window 3" x={250} y={250} onClose={() => { }} >
                             <Box>
                                 <Text label='Box Border' />
@@ -40,6 +41,7 @@ export default function DemoApp() {
                                 <Button label='Button' onClick={() => { }} />
                             </Box>
                         </Window>
+}
 
                     </WindowProvider>
                 </App>

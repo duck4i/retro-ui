@@ -227,7 +227,6 @@
     display: inline-block;
     width: 100%;
     height: 100%;
-    border: 1px solid #000;
 }
 
 .viewport {
@@ -277,8 +276,8 @@
     bottom: 15px;
     left: 0;
     right: 0;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 1px, #000 1px, #000 2px),
-        repeating-linear-gradient(-45deg, transparent, transparent 1px, #000 1px, #000 2px);
+    background-image: radial-gradient(#fff 1px, #000 1px),
+        radial-gradient(#000 1px, transparent 1px);
 }
 
 .scrollPatternHorizontal {
@@ -287,11 +286,14 @@
     right: 15px;
     top: 0;
     bottom: 0;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 1px, #000 1px, #000 2px),
-        repeating-linear-gradient(-45deg, transparent, transparent 1px, #000 1px, #000 2px);
+    background-image: radial-gradient(#fff 1px, #000 1px),
+        radial-gradient(#000 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: 0 0, 5px 5px;
 }
 
 .scrollButton {
+    outline: none;
     user-select: none;
     position: absolute;
     width: 15px;
@@ -308,6 +310,8 @@
     padding: 0;
     z-index: 2;
 }
+
+
 
 .buttonUp {
     top: 0;

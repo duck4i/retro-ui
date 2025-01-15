@@ -16,6 +16,8 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
     const [startScroll, setStartScroll] = useState({ top: 0, left: 0, isHorizontal: false });
     const [buttonSize] = useState(15);
+    const [thumbHeight, setThumbHeight] = useState(20);
+    const [thumbWidth, setThumbWidth] = useState(20);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -28,6 +30,10 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
 
             setShowVerticalScrollbar(hasVerticalScroll);
             setShowHorizontalScrollbar(hasHorizontalScroll);
+
+            const { thumbHeight, thumbWidth } = getScrollbarDimensions();
+            setThumbHeight(thumbHeight);
+            setThumbWidth(thumbWidth);
         }
     };
 
@@ -59,10 +65,8 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
         const maxHorizontalScroll = container.scrollWidth - container.clientWidth;
 
         if (maxVerticalScroll > 0) {
-            const trackHeight = (container.clientHeight - buttonSize * 2);
-            const newVerticalPosition = (container.scrollTop / maxVerticalScroll) * trackHeight;
-            const adjustedPosition = Math.min(trackHeight, Math.max(0, newVerticalPosition));
-            setVerticalPosition(adjustedPosition);
+            const newVerticalPosition = (container.scrollTop / maxVerticalScroll) * 100;
+            setVerticalPosition(Math.min(100, Math.max(0, newVerticalPosition)));
         }
 
         if (maxHorizontalScroll > 0) {
@@ -105,12 +109,12 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
 
         if (isHorizontal) {
             const deltaX = e.clientX - startPosition.x;
-            const horizontalRatio = (container.scrollWidth - container.clientWidth) / (container.clientWidth - buttonSize * 3);
+            const horizontalRatio = (container.scrollWidth - container.clientWidth) / (container.clientWidth - buttonSize * 2);
             container.scrollLeft = startScroll.left + (deltaX * horizontalRatio * speedMultiplier);
         } else {
             const deltaY = e.clientY - startPosition.y;
-            const verticalRatio = (container.scrollHeight - container.clientHeight) / (container.clientHeight - buttonSize * 3);
-            container.scrollTop = startScroll.top - (deltaY * verticalRatio * speedMultiplier);
+            const verticalRatio = (container.scrollHeight - container.clientHeight) / (container.clientHeight - buttonSize * 2);
+            container.scrollTop = startScroll.top + (deltaY * verticalRatio * speedMultiplier);
         }
     };
 
@@ -146,8 +150,6 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
         return { thumbHeight, thumbWidth };
     };
 
-    const { thumbHeight, thumbWidth } = getScrollbarDimensions();
-
     return (
         <div ref={wrapperRef} className={styles.wrapper} style={{ width, height }}>
             <div ref={containerRef} className={styles.viewport} onScroll={handleScroll}>
@@ -171,7 +173,7 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
                         className={styles.scrollThumbVertical}
                         style={{
                             height: thumbHeight,
-                            top: `${buttonSize + verticalPosition}px`
+                            top: `${buttonSize + verticalPosition * ((containerRef.current?.clientHeight || 0) - buttonSize * 1 - thumbHeight) / 100}px`
                         }}
                         onMouseDown={(e) => handleDragStart(e, false)}
                     />
@@ -187,7 +189,7 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
             )}
 
             {showHorizontalScrollbar && (
-                <div className={styles.scrollTrackHorizontal}>
+                <div className={styles.scrollTrackHorizontal} style={{ width: showVerticalScrollbar ? `calc(100% - ${buttonSize}px)` : '100%' }}>
                     <div className={styles.scrollPatternHorizontal} />
                     <button
                         className={`${styles.scrollButton} ${styles.buttonLeft}`}
@@ -201,7 +203,7 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
                         className={styles.scrollThumbHorizontal}
                         style={{
                             width: thumbWidth,
-                            left: `${buttonSize + horizontalPosition * ((containerRef.current?.clientWidth || 0) - buttonSize * 2 - thumbWidth) / 100}px`
+                            left: `${buttonSize + horizontalPosition * ((containerRef.current?.clientWidth || 0) - buttonSize - thumbWidth) / 100}px`
                         }}
                         onMouseDown={(e) => handleDragStart(e, true)}
                     />
