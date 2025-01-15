@@ -3,13 +3,14 @@
   "include": [
     "components/**/*",
     "index.ts",
-    "css.d.ts"
+    "css.d.ts",
+    "utils/**/*"
   ],
   "exclude": [
     "node_modules"
   ],
   "compilerOptions": {
     "outDir": "dist",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   },
 }

@@ -1,40 +1,38 @@
 Example: 
 
 ```js
-    <div style={{ height: 600 }}>
-        <App>
-            <WindowProvider>
- 
-                <Window title="Mixed components" x={10} y={10} onClose={() => { }} >
-                    <Text label='Hello' />
-                    <ButtonGroup>
-                        <Button label='Button' onClick={() => { }} />
-                        <Button label='Button 2' onClick={() => { }} />
-                        <Button label='Button 3' disabled onClick={() => { }} />
-                    </ButtonGroup>
-                    <ButtonGroup vertical>
-                        <Button label='Button 4' onClick={() => { }} />
-                        <Button label='Button 5' onClick={() => { }} />
-                    </ButtonGroup>
-                </Window>
+    <App height={600}>
+        <WindowProvider>
 
-                <Window title="Label styles" onClose={() => { }} x={150} y={200}>
-                    <Text label='Hello' />
-                    <Text label='Hello' bold blink />
-                    <Text label='Hello' inverse />
-                </Window>
+            <Window title="Mixed components" x={10} y={10} onClose={() => { }} >
+                <Text label='Hello' />
+                <ButtonGroup>
+                    <Button label='Button' onClick={() => { }} />
+                    <Button label='Button 2' onClick={() => { }} />
+                    <Button label='Button 3' disabled onClick={() => { }} />
+                </ButtonGroup>
+                <ButtonGroup vertical>
+                    <Button label='Button 4' onClick={() => { }} />
+                    <Button label='Button 5' onClick={() => { }} />
+                </ButtonGroup>
+            </Window>
 
-                <Window title="Window 3" x={250} y={300} onClose={() => { }} >
-                    <Box>
-                        <Text label='Box Border' />
-                    </Box>
-                    <Box type='inset' vertical>
-                        <Text label='Box inset' />
-                        <Button label='Button' onClick={() => { }} />
-                    </Box>
-                </Window>
-                
-            </WindowProvider>
-        </App>
-    </div>
+            <Window title="Label styles" onClose={() => { }} x={150} y={200}>
+                <Text label='Hello' />
+                <Text label='Hello' bold blink />
+                <Text label='Hello' bold backgroundColor="green" />
+            </Window>
+
+            <Window title="Window 3" x={250} y={300} onClose={() => { }} >
+                <Box>
+                    <Text label='Box Border' />
+                </Box>
+                <Box type='inset' vertical>
+                    <Text label='Box inset' />
+                    <Button label='Button' onClick={() => { }} />
+                </Box>
+            </Window>
+            
+        </WindowProvider>
+    </App>
 ```

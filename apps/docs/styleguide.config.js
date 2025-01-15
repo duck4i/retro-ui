@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     title: "retro-ui",
     styleguideDir: './dist',
-    components: '../../packages/ui/components/**/*.{ts,tsx}',
+    components: ['../../packages/ui/components/**/*.{ts,tsx}', '../../packages/ui/utils/**/*.{ts,tsx}'],
     /*
     sections: [
         {
@@ -59,17 +59,27 @@ module.exports = {
             codeBackground: 'black',
             border: 'blue',
             name: 'white',
-            type: 'magenta',
+            type: '#AA00AA',
             link: '#008400',
             linkHover: 'cyan',
         },
         fontFamily: {
-            base: 'monospace'
+            base: 'Perfect DOS VGA 437'
         },
         borderRadius: 0
     },
     styles: function (theme) {
         return {
+            StyleGuide: {
+                '@global': {
+                    '@font-face': {
+                        fontFamily: 'Perfect DOS VGA 437',
+                        src: `url('../../packages/ui/assets/Perfect_DOS_VGA_437.ttf') format('truetype')`,
+                        fontWeight: 'normal',
+                        fontStyle: 'normal'
+                    },
+                }
+            },
             Logo: {
                 logo: {
                     color: "yellow"

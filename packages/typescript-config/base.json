@@ -9,6 +9,7 @@
     "inlineSources": false,
     "isolatedModules": true,
     "module": "ESNext",
+    "lib": ["ES2015", "ESNext", "DOM"],
     "moduleResolution": "Bundler",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
