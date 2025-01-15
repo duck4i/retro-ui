@@ -85,7 +85,7 @@
     text-decoration: underline;
 }
 
-.window  .windowContent {
+.window .windowContent {
     padding: 10px;
 }
 
@@ -172,9 +172,23 @@
     animation: blink 1s step-start infinite;
 }
 
-.textInverse {
-    background-color: var(--retro-text-color);
-    color: var(--retro-bg-color);
+/* Big text */
+.bigText {
+    user-select: none;
+    font-family: monospace;
+    line-height: 1.3;
+    letter-spacing: 0;
+    white-space: pre;
+    display: block;
+    overflow-x: auto;
+    color: var(--retro-text-color);
+}
+
+.bigText>div {
+    white-space: pre;
+    height: 1.2em;
+    min-width: min-content;
+    min-height: min-content;
 }
 
 @keyframes blink {
@@ -201,6 +215,6 @@
 
 .boxInset {
     border: 1px solid var(--retro-box-border);
-    border-right: 2px solid  var(--retro-box-border-inset);
+    border-right: 2px solid var(--retro-box-border-inset);
     border-bottom: 2px solid var(--retro-box-border-inset);
 }

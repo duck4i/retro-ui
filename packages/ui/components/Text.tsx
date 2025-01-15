@@ -1,24 +1,25 @@
 import styles from '../global.module.css';
+import { applyDefaultStyle, ComponentProps } from '../utils/ComponentProps';
 
-interface TextProps {
+interface TextProps extends Partial<ComponentProps> {
     label: string;
     bold?: boolean;
     blink?: boolean;
-    inverse?: boolean;
 }
 
 /** A simple label component with bold, blink and inverse decorators */
-export const Text = ({ label, bold, blink, inverse }: TextProps) => {
+export const Text = ({ label, bold, blink, ...rest }: TextProps) => {
     return (
         <div className={[
             styles.text,
             bold ? styles.textBold : '',
             blink ? styles.textBlink : '',
-            inverse ? styles.textInverse : ''
-        ].join(' ')
-        }>
+        ].join(' ')}
+            style={{
+                ...applyDefaultStyle(rest)
+            }}
+        >
             <p>{label}</p>
         </div>
     );
 };
-

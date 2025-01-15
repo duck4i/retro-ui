@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { WindowContext } from './WindowProvider';
 import styles from '../global.module.css';
+import { applyDefaultStyle, ComponentProps } from '../utils/ComponentProps';
 
-export interface WindowProps {
+export interface WindowProps extends Omit<Partial<ComponentProps>, 'margin'> {
     title: string;
     x?: number;
     y?: number;
-    width?: number;
-    height?: number;
     onClose: () => void;
     children?: React.ReactNode;
 }
@@ -15,7 +14,7 @@ export interface WindowProps {
 /**
  * A draggable window component with retro feel
  */
-export function Window({ title, children, x, y, width, height, onClose }: WindowProps) {
+export function Window({ title, children, x, y, onClose, ...rest }: WindowProps) {
 
     const context = useContext(WindowContext);
     if (!context) {
@@ -85,8 +84,8 @@ export function Window({ title, children, x, y, width, height, onClose }: Window
             style={
                 {
                     top: `${position.y}px`, left: `${position.x}px`,
-                    width: width, height: height,
-                    zIndex: z
+                    zIndex: z,
+                    ...applyDefaultStyle(rest),
                 }}
         >
             <div className={styles.titleBar} onMouseDown={handleMouseDown}>

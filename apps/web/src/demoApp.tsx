@@ -1,4 +1,4 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
@@ -16,7 +16,7 @@ export default function DemoApp() {
                                 <Button label='Button 2' onClick={() => { }} />
                                 <Button label='Button 3' disabled onClick={() => { }} />
                             </ButtonGroup>
-                            <ButtonGroup vertical>
+                            <ButtonGroup vertical backgroundColor='green'>
                                 <Button label='Button 4' onClick={() => { }} />
                                 <Button label='Button 5' onClick={() => { }} />
                             </ButtonGroup>
@@ -25,7 +25,8 @@ export default function DemoApp() {
                         <Window title="Label styles" onClose={() => { }} x={150} y={150}>
                             <Text label='Hello' />
                             <Text label='Hello' bold blink />
-                            <Text label='Hello' inverse />
+                            <Text label='Hello' backgroundColor='cyan' color='white' />
+                            <BigText label='Hey bro'  backgroundColor='red' />
                         </Window>
 
                         <Window title="Window 3" x={250} y={250} onClose={() => { }} >
@@ -37,7 +38,7 @@ export default function DemoApp() {
                                 <Button label='Button' onClick={() => { }} />
                             </Box>
                         </Window>
-                        
+
                     </WindowProvider>
                 </App>
             </div>

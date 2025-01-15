@@ -64,12 +64,22 @@ module.exports = {
             linkHover: 'cyan',
         },
         fontFamily: {
-            base: 'monospace'
+            base: 'Perfect DOS VGA 437'
         },
         borderRadius: 0
     },
     styles: function (theme) {
         return {
+            StyleGuide: {
+                '@global': {
+                    '@font-face': {
+                        fontFamily: 'Perfect DOS VGA 437',
+                        src: `url('../../packages/ui/assets/Perfect_DOS_VGA_437.ttf') format('truetype')`,
+                        fontWeight: 'normal',
+                        fontStyle: 'normal'
+                    },
+                }
+            },
             Logo: {
                 logo: {
                     color: "yellow"
