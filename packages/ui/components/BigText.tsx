@@ -211,7 +211,7 @@ interface BigTextProps extends Partial<ComponentProps> {
     blink?: boolean;
 }
 
-/** A simple label component with bold, blink and inverse decorators */
+/** A label that generates ASCII text for you. */
 export const BigText = ({ label, bold, blink, ...rest }: BigTextProps) => {
     const [asciiLines, setAsciiLines] = useState<string[][]>([[], [], []]);
 

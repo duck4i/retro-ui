@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     title: "retro-ui",
     styleguideDir: './dist',
-    components: '../../packages/ui/components/**/*.{ts,tsx}',
+    components: ['../../packages/ui/components/**/*.{ts,tsx}', '../../packages/ui/utils/**/*.{ts,tsx}'],
     /*
     sections: [
         {
@@ -59,7 +59,7 @@ module.exports = {
             codeBackground: 'black',
             border: 'blue',
             name: 'white',
-            type: 'magenta',
+            type: '#AA00AA',
             link: '#008400',
             linkHover: 'cyan',
         },

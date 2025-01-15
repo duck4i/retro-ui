@@ -20,7 +20,7 @@ Example:
             <Window title="Label styles" onClose={() => { }} x={150} y={200}>
                 <Text label='Hello' />
                 <Text label='Hello' bold blink />
-                <Text label='Hello' inverse />
+                <Text label='Hello' bold backgroundColor="green" />
             </Window>
 
             <Window title="Window 3" x={250} y={300} onClose={() => { }} >

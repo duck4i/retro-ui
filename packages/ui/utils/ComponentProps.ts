@@ -1,5 +1,6 @@
 import { Color, getColor } from "./Color";
 
+/** Default props that all UI components inherit */
 export interface ComponentProps {
     color?: Color,
     backgroundColor?: Color,
