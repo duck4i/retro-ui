@@ -276,8 +276,9 @@
     bottom: 15px;
     left: 0;
     right: 0;
-    background-image: radial-gradient(#fff 1px, #000 1px),
-        radial-gradient(#000 1px, transparent 1px);
+    background-image: radial-gradient(#fff 1px, #000 1px);
+    background-size: 4px 4px;
+    background-position: 0 0;
 }
 
 .scrollPatternHorizontal {

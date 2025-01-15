@@ -5,11 +5,13 @@ interface RetroScrollbarProps {
     children: ReactNode;
     height?: string;
     width?: string;
+    alwaysShowVertical?: boolean;
+    alwaysShowHorizontal?: boolean;
 }
 
-export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroScrollbarProps) => {
-    const [showVerticalScrollbar, setShowVerticalScrollbar] = useState(false);
-    const [showHorizontalScrollbar, setShowHorizontalScrollbar] = useState(false);
+export const Scrollbar = ({ children, height = '100%', width = '100%', alwaysShowVertical = false, alwaysShowHorizontal = false }: RetroScrollbarProps & { alwaysShowVertical?: boolean, alwaysShowHorizontal?: boolean }) => {
+    const [showVerticalScrollbar, setShowVerticalScrollbar] = useState(alwaysShowVertical);
+    const [showHorizontalScrollbar, setShowHorizontalScrollbar] = useState(alwaysShowHorizontal);
     const [verticalPosition, setVerticalPosition] = useState(0);
     const [horizontalPosition, setHorizontalPosition] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -28,8 +30,8 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
             const hasVerticalScroll = contentRef.current.scrollHeight > containerRef.current.clientHeight;
             const hasHorizontalScroll = contentRef.current.scrollWidth > containerRef.current.clientWidth;
 
-            setShowVerticalScrollbar(hasVerticalScroll);
-            setShowHorizontalScrollbar(hasHorizontalScroll);
+            setShowVerticalScrollbar(alwaysShowVertical || hasVerticalScroll);
+            setShowHorizontalScrollbar(alwaysShowHorizontal || hasHorizontalScroll);
 
             const { thumbHeight, thumbWidth } = getScrollbarDimensions();
             setThumbHeight(thumbHeight);
@@ -169,14 +171,16 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
                         ▲
                     </button>
 
-                    <div
-                        className={styles.scrollThumbVertical}
-                        style={{
-                            height: thumbHeight,
-                            top: `${buttonSize + verticalPosition * ((containerRef.current?.clientHeight || 0) - buttonSize * 1 - thumbHeight) / 100}px`
-                        }}
-                        onMouseDown={(e) => handleDragStart(e, false)}
-                    />
+                    {contentRef.current && contentRef.current.scrollHeight > (containerRef.current?.clientHeight || 0) && (
+                        <div
+                            className={styles.scrollThumbVertical}
+                            style={{
+                                height: thumbHeight,
+                                top: `${buttonSize + verticalPosition * ((containerRef.current?.clientHeight || 0) - buttonSize * 1 - thumbHeight) / 100}px`
+                            }}
+                            onMouseDown={(e) => handleDragStart(e, false)}
+                        />
+                    )}
 
                     <button
                         className={`${styles.scrollButton} ${styles.buttonDown}`}
@@ -199,14 +203,16 @@ export const Scrollbar = ({ children, height = '100%', width = '100%' }: RetroSc
                         ◀
                     </button>
 
-                    <div
-                        className={styles.scrollThumbHorizontal}
-                        style={{
-                            width: thumbWidth,
-                            left: `${buttonSize + horizontalPosition * ((containerRef.current?.clientWidth || 0) - buttonSize - thumbWidth) / 100}px`
-                        }}
-                        onMouseDown={(e) => handleDragStart(e, true)}
-                    />
+                    {contentRef.current && contentRef.current.scrollWidth > (containerRef.current?.clientWidth || 0) && (
+                        <div
+                            className={styles.scrollThumbHorizontal}
+                            style={{
+                                width: thumbWidth,
+                                left: `${buttonSize + horizontalPosition * ((containerRef.current?.clientWidth || 0) - buttonSize - thumbWidth) / 100}px`
+                            }}
+                            onMouseDown={(e) => handleDragStart(e, true)}
+                        />
+                    )}
 
                     <button
                         className={`${styles.scrollButton} ${styles.buttonRight}`}
