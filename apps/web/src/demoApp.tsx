@@ -1,4 +1,4 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 
 export default function DemoApp() {
@@ -38,6 +38,8 @@ export default function DemoApp() {
                             <Box type='inset' vertical>
                                 <Text label='Box inset' />
                                 <Button label='Button' onClick={() => { }} />
+                                <br />
+                                <ProgressBar progress={50} max={100} />
                             </Box>
                         </Window>
 
