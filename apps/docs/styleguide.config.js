@@ -19,6 +19,8 @@ module.exports = {
         ButtonGroup: './ButtonGroup',
         Text: './Text',
         Window: './Window',
+        BigText: './BigText',
+        ProgressBar: './ProgressBar',
         WindowProvider: './WindowProvider',
     },
     webpackConfig: {

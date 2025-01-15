@@ -37,8 +37,6 @@ export default function DemoApp() {
                             </Box>
                             <Box type='inset' vertical>
                                 <Text label='Box inset' />
-                                <Button label='Button' onClick={() => { }} />
-                                <br />
                                 <ProgressBar progress={50} max={100} />
                             </Box>
                         </Window>
