@@ -4,7 +4,7 @@ import '@duck4i/retro-ui/style.css'
 export default function DemoApp() {
     return (
         <div>
-            <h1>@duck4i/-llama</h1>
+            <h1>@duck4i/retro-llama</h1>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 800, height: 600 }}>
                 <App>
                     <WindowProvider>
