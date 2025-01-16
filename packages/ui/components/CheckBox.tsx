@@ -11,15 +11,13 @@ interface CheckBoxProps extends Partial<ComponentProps> {
 
 /** A simple checkbox component */
 export const CheckBox = ({ label, checked, onChange, disabled, ...rest }: CheckBoxProps) => {
-    const [checkedState, setCheckedState] = useState(checked);
 
     return (
         <label className={styles.checkboxLabel} style={applyDefaultStyle(rest)}>
             <input
                 type="checkbox"
-                checked={checkedState}
+                checked={checked}
                 onChange={(e) => {
-                    setCheckedState(e.target.checked);
                     onChange?.call(this, e.target.checked)
                 }}
                 disabled={disabled}

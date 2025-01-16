@@ -8,6 +8,7 @@ const ComponentsDemo = () => {
     const [w2, setW2] = useState(true);
     const [w3, setW3] = useState(true);
     const [text, setText] = useState('');
+    const [checked, setChecked] = useState(true);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 800, height: 600 }}>
@@ -48,7 +49,7 @@ const ComponentsDemo = () => {
                             <Text label='Box inset' />
                         </Box>
                         <ProgressBar progress={50} max={100} />
-                        <CheckBox label='I accept' checked />
+                        <CheckBox label='I accept' checked={checked} onChange={(ch) => setChecked(ch)}/>
                     </Window>
                     }
 
