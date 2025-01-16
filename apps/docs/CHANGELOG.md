@@ -1,5 +1,11 @@
 # docs
 
+## 1.0.2
+
+### Patch Changes
+
+- fixes for css
+
 ## 1.0.1
 
 ### Patch Changes

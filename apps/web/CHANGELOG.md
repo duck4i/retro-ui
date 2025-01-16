@@ -1,5 +1,13 @@
 # web
 
+## 0.3.1
+
+### Patch Changes
+
+- fixes for css
+- Updated dependencies
+  - @duck4i/retro-ui@0.3.1
+
 ## 0.3.0
 
 ### Minor Changes
