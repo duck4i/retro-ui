@@ -12,7 +12,7 @@ export const ProgressBar = ({ progress, max, ...rest }: ProgressBarProps) => {
 
     return (
         <div className={styles.progressRoot} style={{ ...applyDefaultStyle(rest) }}>
-            <div className={styles.progressLabel}>{`${percentage}%`}</div>
+            <span className={styles.progressLabel}>{`${percentage}%`}</span>
             <progress  className={styles.progress} value={progress} max={max}/>
         </div>
     );

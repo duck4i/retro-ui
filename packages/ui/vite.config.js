@@ -5,9 +5,9 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
     plugins: [
         dts({
-            insertTypesEntry: true,
             include: ["components/**/*", "index.ts", "css.d.ts"],
             rollupTypes: true,
+            insertTypesEntry: true,
             outDir: 'dist',
         }),
     ],
