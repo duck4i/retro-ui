@@ -24,6 +24,7 @@
     --retro-box-border-inset: #fff;
     --retro-input-bg: #fff;
     --retro-input-text: #000;
+    --retro-input-text-disabled: #595959;
     --retro-input-select: #000;
 }
 
@@ -228,6 +229,8 @@
     display: block;
     width: 100%;
     height: 100%;
+    min-height: 30px;
+    min-width: 30px;
     box-sizing: border-box;
 }
 
@@ -237,6 +240,7 @@
 
 .viewport {
     position: absolute;
+    height: 100%;
     top: 0;
     left: 0;
     right: 15px;
@@ -253,7 +257,9 @@
 }
 
 .content {
-    display: inline-block;
+    display: block;
+    width: 100%;
+    height: 100%;
     min-width: 100%;
     min-height: 100%;
 }
@@ -416,6 +422,10 @@
     box-sizing: border-box;
 }
 
+.input:read-only {
+    color: var(--retro-input-text-disabled);
+}
+
 .inputBorder {
     border: 1px solid var(--retro-box-border);
 }
@@ -423,7 +433,31 @@
 .input::selection {
     background-color: var(--retro-input-select);
     color: var(--retro-input-bg);
-    height: 100%;
-    margin: 0;
-    padding: 0;
+}
+
+.inputBoxWrapper {
+    background-color: var(--retro-input-bg);
+}
+
+.inputBox {
+    border: none;
+    outline: none;
+    background-color: var(--retro-input-bg);
+    color: var(--retro-input-text);
+    font-family: var(--retro-font);
+    font-size: 1em;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    resize: none;
+}
+
+.inputBox::selection {
+    background-color: var(--retro-input-select);
+    color: var(--retro-input-bg);
+}
+
+.inputBox:read-only {
+    color: var(--retro-input-text-disabled);
 }

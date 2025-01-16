@@ -1,5 +1,11 @@
 # docs
 
+## 1.0.3
+
+### Patch Changes
+
+- input fixes and inputbox added
+
 ## 1.0.2
 
 ### Patch Changes

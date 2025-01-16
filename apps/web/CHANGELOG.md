@@ -1,5 +1,13 @@
 # web
 
+## 0.3.3
+
+### Patch Changes
+
+- input fixes and inputbox added
+- Updated dependencies
+  - @duck4i/retro-ui@0.3.3
+
 ## 0.3.2
 
 ### Patch Changes
