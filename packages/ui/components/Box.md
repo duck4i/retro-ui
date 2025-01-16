@@ -3,11 +3,11 @@
 import { Text } from './Text';
 
 <div>
-   <Box>
+   <Box backgroundColor='silver'>
       <Text label="I have a border" />
    </Box>
 
-   <Box type="inset">
+   <Box type="inset" backgroundColor='cyan'>
       <Text label="I am inset" />
    </Box>
 </div>

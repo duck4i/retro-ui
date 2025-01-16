@@ -1,4 +1,4 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 import { useState } from 'react';
 
@@ -7,6 +7,7 @@ const ComponentsDemo = () => {
     const [w1, setW1] = useState(true);
     const [w2, setW2] = useState(true);
     const [w3, setW3] = useState(true);
+    const [text, setText] = useState('');
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 800, height: 600 }}>
@@ -37,14 +38,16 @@ const ComponentsDemo = () => {
                     </Window>
                     }
 
-                    {w3 && <Window title="Window 3" x={350} y={400} onClose={() => setW3(false)} >
-                        <Box>
-                            <Text label='Box Border' />
+                    {w3 && <Window title="Window 3" x={350} y={350} onClose={() => setW3(false)} >
+                        <Box vertical gap={3}>
+                            <Text label={`Type: ${text}`} />
+                            <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
+                            <InputBox defaultValue="InputBox" onChange={(value) => { setText(value)}} readOnly/>
                         </Box>
-                        <Box type='inset' vertical>
+                        <Box type='inset' >
                             <Text label='Box inset' />
-                            <ProgressBar progress={50} max={100} />
                         </Box>
+                        <ProgressBar progress={50} max={100} />
                     </Window>
                     }
 

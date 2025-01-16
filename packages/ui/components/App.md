@@ -25,7 +25,8 @@ Example:
 
             <Window title="Window 3" x={250} y={300} onClose={() => { }} >
                 <Box>
-                    <Text label='Box Border' />
+                    <Text label='Type:' />
+                    <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
                 </Box>
                 <Box type='inset' vertical>
                     <Text label='Box inset' />
