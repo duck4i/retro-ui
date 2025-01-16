@@ -43,7 +43,7 @@ const ComponentsDemo = () => {
                         <Box vertical gap={3}>
                             <Text label={`Type: ${text}`} />
                             <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
-                            <InputBox defaultValue="InputBox \n with \n multitext" onChange={(value) => { setText(value)}} readOnly/>
+                            <InputBox defaultValue={`InputBox \n with \n multitext`} onChange={(value) => { setText(value)}} readOnly/>
                         </Box>
                         <Box type='inset' >
                             <Text label='Box inset' />
