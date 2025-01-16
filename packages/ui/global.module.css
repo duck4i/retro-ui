@@ -101,7 +101,7 @@
     background: var(--retro-button-bg);
     color: var(--retro-button-text);
     border: none;
-    box-shadow: 8px 8px 0px #000;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.75);
     cursor: pointer;
     padding: 5px 10px;
     font-family: 'Courier New', Courier, monospace;
@@ -482,7 +482,7 @@
     height: 14px;
     color: var(--retro-checkbox-checked);
     background-color: var(--retro-checkbox-back);
-    border:none;
+    border: none;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -514,4 +514,112 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Dropdown */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    min-width: 150px;
+    min-height: 20px;
+}
+
+.dropdownButton {
+    user-select: none;
+    background: var(--retro-input-bg);
+    color: var(--retro-input-text);
+    border: none;
+    cursor: pointer;
+    padding: 5px 30px 5px 10px;
+    font-family: var(--retro-font);
+    margin: 5px;
+    outline: none;
+    text-transform: capitalize;
+    border-radius: 0;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+/* Dropdown icon */
+.dropdownButton::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000;
+}
+
+.dropdown.disabled .dropdownButton {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.dropdownContent {
+    position: absolute;
+    top: 100%;
+    left: 5px;
+    right: 5px;
+    background: var(--retro-input-bg);
+    border: none;
+    z-index: 1000;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.75);
+}
+
+.option {
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-family: var(--retro-font);
+    font-size: 13px;
+}
+
+.option:hover {
+    background: #000;
+    color: #fff;
+}
+
+.option.selected {
+    color: white;
+    background: var(--retro-box-border);
+}
+
+/* Listview */
+
+.listView {
+    border: 1px solid var(--retro-box-border);
+    border-bottom: 2px solid var(--retro-box-border);
+    border-right: 2px solid var(--retro-box-border);
+    user-select: none;
+    margin: 5px;
+    min-width: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.listView.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.listItem {
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-family: var(--retro-font);
+}
+
+.listItem.selected {
+    background: #000;
+    color: #fff;
 }
