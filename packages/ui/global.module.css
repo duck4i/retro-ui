@@ -26,6 +26,9 @@
     --retro-input-text: #000;
     --retro-input-text-disabled: #595959;
     --retro-input-select: #000;
+    --retro-checkbox-back: #fff;
+    --retro-checkbox-hover: #595959;
+    --retro-checkbox-checked: #000;
 }
 
 .app {
@@ -460,4 +463,55 @@
 
 .inputBox:read-only {
     color: var(--retro-input-text-disabled);
+}
+
+/* Checkbox */
+
+.checkboxLabel {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--retro-text-color);
+    font-family: var(--retro-font);
+}
+
+.checkbox {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    color: var(--retro-checkbox-checked);
+    background-color: var(--retro-checkbox-back);
+    border:none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.checkbox:hover {
+    background-color: var(--retro-checkbox-hover);
+}
+
+.checkbox:checked::after {
+    font-family: var(--retro-font);
+    content: 'x';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--retro-checkbox-checked);
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.checkboxGroup {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

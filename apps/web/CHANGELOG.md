@@ -1,5 +1,13 @@
 # web
 
+## 0.3.4
+
+### Patch Changes
+
+- checkbox added
+- Updated dependencies
+  - @duck4i/retro-ui@0.3.4
+
 ## 0.3.3
 
 ### Patch Changes
