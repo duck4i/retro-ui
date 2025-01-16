@@ -28,8 +28,6 @@
     position: relative;
     font-family: var(--retro-font);
     font-size: normal;
-    display: flex;
-    flex-direction: column;
     height: 100%;
     width: 100%;
     color: white;
@@ -201,8 +199,7 @@
 
 .box {
     display: flex;
-    justify-content: center;
-    background-color: var(--retro-bg-color);
+    align-items: center;
     padding: 5px;
     margin: 5px;
 }
@@ -224,9 +221,13 @@
 .wrapper {
     position: relative;
     overflow: hidden;
-    display: inline-block;
+    display: block;
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
+}
+
+.wrapperBorder {
     border: 2px solid #000;
 }
 
@@ -259,7 +260,6 @@
     right: 0;
     width: 15px;
     height: 100%;
-    background-color: #718096;
 }
 
 .scrollTrackHorizontal {
@@ -268,7 +268,6 @@
     left: 0;
     height: 15px;
     width: calc(100% - 15px);
-    background-color: #718096;
 }
 
 .scrollPattern {
@@ -313,8 +312,6 @@
     z-index: 2;
 }
 
-
-
 .buttonUp {
     top: 0;
 }
@@ -351,12 +348,55 @@
     min-width: 10px;
 }
 
-.cornerBox {
+/* Progress bar */
+
+.progressRoot {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    display: block;
+    position: relative;
+}
+
+.progress {
+    border: 1px solid black;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#fff 1px, #000 1px),
+        radial-gradient(#000 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: 0 0, 5px 5px;
+}
+
+.progressLabel {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 15px;
-    height: 15px;
-    background-color: #718096;
-    z-index: 1;
+    top: 50%;
+    left: 50%;
+    padding: 1px 3px 1px 3px;
+    transform: translate(-50%, calc(-50% - 2px));
+    font-size: 0.8em;
+    text-align: center;
+    color: black;
+    background-color: white;
+    line-height: 1;
+}
+
+.progress::-webkit-progress-bar {
+    background-image: radial-gradient(#fff 1px, #000 1px),
+        radial-gradient(#000 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: 0 0, 5px 5px;
+}
+
+.progress::-webkit-progress-value {
+    background-color: black;
+}
+
+.progress::-moz-progress-bar {
+    background-color: black;
+}
+
+.progress::-ms-fill {
+    background-color: black;
 }

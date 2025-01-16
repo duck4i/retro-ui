@@ -1,6 +1,6 @@
 
 ```js
-<Box vertical>
+<Box vertical backgroundColor="silver">
     <Text label="Hello i'm a text" />
     <Text label="Hello i'm a text" bold />
     <Text label="Hello i'm a text" bold blink/>

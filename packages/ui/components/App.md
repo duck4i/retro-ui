@@ -29,7 +29,7 @@ Example:
                 </Box>
                 <Box type='inset' vertical>
                     <Text label='Box inset' />
-                    <Button label='Button' onClick={() => { }} />
+                    <ProgressBar progress={50} max={100} />
                 </Box>
             </Window>
             

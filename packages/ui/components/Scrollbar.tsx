@@ -6,10 +6,11 @@ interface RetroScrollbarProps extends Partial<ComponentProps> {
     children: ReactNode;
     alwaysShowVertical?: boolean;
     alwaysShowHorizontal?: boolean;
+    border?: boolean;
 }
 
 /** Presents scrollable content with nested components. */
-export const Scrollbar = ({ children,  alwaysShowVertical = false, alwaysShowHorizontal = false, ...rest }: RetroScrollbarProps & { alwaysShowVertical?: boolean, alwaysShowHorizontal?: boolean }) => {
+export const Scrollbar = ({ children, alwaysShowVertical = false, alwaysShowHorizontal = false, border = true, ...rest }: RetroScrollbarProps & { alwaysShowVertical?: boolean, alwaysShowHorizontal?: boolean }) => {
     const [showVerticalScrollbar, setShowVerticalScrollbar] = useState(alwaysShowVertical);
     const [showHorizontalScrollbar, setShowHorizontalScrollbar] = useState(alwaysShowHorizontal);
     const [verticalPosition, setVerticalPosition] = useState(0);
@@ -153,9 +154,9 @@ export const Scrollbar = ({ children,  alwaysShowVertical = false, alwaysShowHor
     };
 
     return (
-        <div ref={wrapperRef} className={styles.wrapper} style={{ width: rest.width, height: rest.height }}>
+        <div ref={wrapperRef} className={[styles.wrapper, border ? styles.wrapperBorder : ''].join(" ")} style={{ width: rest.width, height: rest.height }}>
             <div ref={containerRef} className={styles.viewport} onScroll={handleScroll}>
-                <div ref={contentRef} className={styles.content} style={{...applyDefaultStyle(rest), width: "100%", height: "100%"}}>
+                <div ref={contentRef} className={styles.content} style={{ ...applyDefaultStyle(rest), width: "100%", height: "100%" }}>
                     {children}
                 </div>
             </div>

@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.3.1
+
+### Patch Changes
+
+- fixes for css
+
 ## 0.3.0
 
 ### Minor Changes
