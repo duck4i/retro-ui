@@ -30,4 +30,3 @@ export const CheckBox = ({ label, checked, onChange, disabled, ...rest }: CheckB
         </label>
     );
 };
-

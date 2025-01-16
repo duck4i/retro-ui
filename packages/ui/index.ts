@@ -4,6 +4,7 @@ export * from "./components/Button";
 export * from "./components/ButtonGroup";
 export * from "./components/BigText";
 export * from "./components/CheckBox";
+export * from "./components/CheckBoxGroup";
 export * from "./components/ProgressBar";
 export * from "./components/Input";
 export * from "./components/InputBox";
