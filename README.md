@@ -1,6 +1,8 @@
 # Retro-UI
 
-Turborepo and Vite driven project for retro-ui react UI component framework and its accompanying retro-llama example.
+[![Build](https://github.com/duck4i/retro-ui/actions/workflows/build.yml/badge.svg)](https://github.com/duck4i/retro-ui/actions/workflows/build.yml)
+
+A modern React UI framework with distinctive retro vibes.
 
 ![screenshot](screenshot.png)
 
@@ -8,7 +10,7 @@ Turborepo and Vite driven project for retro-ui react UI component framework and 
 
 To demonstrate usage of retro-ui components in practice we wanted to build something that combines both modern and antique, and hence the LLM AI driven project with a retro UI named **Retro Llama** was born.
 
-You can access [retro-llama](https://retro-llama.pages.dev/) here.
+You can try the [retro-llama](https://retro-llama.pages.dev/) here.
 
 ## Documentation 
 
@@ -29,3 +31,6 @@ import { App } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 ```
 
+## Repo instructions 
+
+This repo is a Turborepo and Vite driven project for retro-ui react UI component framework and its accompanying retro-llama example.
