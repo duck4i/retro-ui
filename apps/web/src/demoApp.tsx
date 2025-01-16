@@ -1,4 +1,4 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, CheckBox } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 import { useState } from 'react';
 
@@ -38,7 +38,7 @@ const ComponentsDemo = () => {
                     </Window>
                     }
 
-                    {w3 && <Window title="Window 3" x={350} y={350} onClose={() => setW3(false)} >
+                    {w3 && <Window title="Window 3" x={350} y={300} onClose={() => setW3(false)} >
                         <Box vertical gap={3}>
                             <Text label={`Type: ${text}`} />
                             <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
@@ -48,6 +48,7 @@ const ComponentsDemo = () => {
                             <Text label='Box inset' />
                         </Box>
                         <ProgressBar progress={50} max={100} />
+                        <CheckBox label='I accept' checked />
                     </Window>
                     }
 
