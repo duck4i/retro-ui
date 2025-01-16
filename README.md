@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/duck4i/retro-ui/actions/workflows/build.yml/badge.svg)](https://github.com/duck4i/retro-ui/actions/workflows/build.yml)
 
-A modern React UI framework with distinctive retro vibes.
+A modern React UI framework with distinctive retro vibes. Quirky and fugly by design.
 
 ![screenshot](screenshot.png)
 
