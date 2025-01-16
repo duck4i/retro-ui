@@ -515,3 +515,136 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Dropdown */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    min-width: 150px;
+}
+
+.dropdownButton {
+    user-select: none;
+    background: var(--retro-input-bg);
+    color: var(--retro-input-text);
+    border: 1px solid var(--retro-box-border);
+    box-shadow: 8px 8px 0px #000;
+    cursor: pointer;
+    padding: 5px 30px 5px 10px;
+    font-family: var(--retro-font);
+    margin: 5px;
+    outline: none;
+    text-transform: capitalize;
+    border-radius: 0;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+/* Dropdown icon */
+.dropdownButton::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000;
+}
+
+.dropdown.disabled .dropdownButton {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.dropdownContent {
+    position: absolute;
+    top: 100%;
+    left: 5px;
+    right: 5px;
+    background: var(--retro-input-bg);
+    border: 1px solid var(--retro-box-border);
+    z-index: 1000;
+}
+
+.option {
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-family: var(--retro-font);
+    font-size: 13px;
+}
+
+.option:hover {
+    background: #000;
+    color: #fff;
+}
+
+.option.selected {
+    color: white;
+    background: var(--retro-box-border);
+}
+
+/* Listview */ 
+
+.listView {
+    user-select: none;
+    background: var(--retro-input-bg);
+    border: 1px solid var(--retro-box-border);
+    box-shadow: 8px 8px 0px #000;
+    margin: 5px;
+    min-width: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.listView.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.listItem {
+    padding: 5px 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-family: var(--retro-font);
+    border-bottom: 1px solid var(--retro-box-border);
+}
+
+.listItem:last-child {
+    border-bottom: none;
+}
+
+.listItem:hover:not(.selected) {
+    background: #000;
+    color: #fff;
+}
+
+.listItem.selected {
+    background: #000;
+    color: #fff;
+}
+
+/* Scrollbar styling */
+.listView::-webkit-scrollbar {
+    width: 10px;
+}
+
+.listView::-webkit-scrollbar-track {
+    background: var(--retro-input-bg);
+}
+
+.listView::-webkit-scrollbar-thumb {
+    background: var(--retro-box-border);
+    border: 1px solid var(--retro-box-border);
+}
+
+.listView::-webkit-scrollbar-thumb:hover {
+    background: #000;
+}
