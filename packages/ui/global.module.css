@@ -408,15 +408,22 @@
 /* Input */
 .input {
     border: none;
+    outline: none;
     background-color: var(--retro-input-bg);
     color: var(--retro-input-text);
     font-family: var(--retro-font);
     font-size: 1em;
-    outline: none;
+    box-sizing: border-box;
+}
+
+.inputBorder {
+    border: 1px solid var(--retro-box-border);
 }
 
 .input::selection {
     background-color: var(--retro-input-select);
     color: var(--retro-input-bg);
     height: 100%;
+    margin: 0;
+    padding: 0;
 }

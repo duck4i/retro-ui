@@ -41,7 +41,7 @@ const ComponentsDemo = () => {
                     {w3 && <Window title="Window 3" x={350} y={350} onClose={() => setW3(false)} >
                         <Box vertical>
                             <Text label={`Box Border ${text}`} />
-                            <Input defaultValue="Text" onChange={(value) => { setText(value)}} />
+                            <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
                         </Box>
                         <Box type='inset' >
                             <Text label='Box inset' />
