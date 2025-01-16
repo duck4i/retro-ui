@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.3.6
+
+### Patch Changes
+
+- readme and git repo update
+
 ## 0.3.5
 
 ### Patch Changes
