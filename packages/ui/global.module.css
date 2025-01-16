@@ -101,7 +101,7 @@
     background: var(--retro-button-bg);
     color: var(--retro-button-text);
     border: none;
-    box-shadow: 8px 8px 0px #000;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.75);
     cursor: pointer;
     padding: 5px 10px;
     font-family: 'Courier New', Courier, monospace;
@@ -482,7 +482,7 @@
     height: 14px;
     color: var(--retro-checkbox-checked);
     background-color: var(--retro-checkbox-back);
-    border:none;
+    border: none;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -523,14 +523,14 @@
     display: inline-block;
     user-select: none;
     min-width: 150px;
+    min-height: 20px;
 }
 
 .dropdownButton {
     user-select: none;
     background: var(--retro-input-bg);
     color: var(--retro-input-text);
-    border: 1px solid var(--retro-box-border);
-    box-shadow: 8px 8px 0px #000;
+    border: none;
     cursor: pointer;
     padding: 5px 30px 5px 10px;
     font-family: var(--retro-font);
@@ -568,8 +568,9 @@
     left: 5px;
     right: 5px;
     background: var(--retro-input-bg);
-    border: 1px solid var(--retro-box-border);
+    border: none;
     z-index: 1000;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.75);
 }
 
 .option {
@@ -591,17 +592,18 @@
     background: var(--retro-box-border);
 }
 
-/* Listview */ 
+/* Listview */
 
 .listView {
-    user-select: none;
-    background: var(--retro-input-bg);
     border: 1px solid var(--retro-box-border);
-    box-shadow: 8px 8px 0px #000;
+    border-bottom: 2px solid var(--retro-box-border);
+    border-right: 2px solid var(--retro-box-border);
+    user-select: none;
     margin: 5px;
     min-width: 150px;
     max-height: 300px;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .listView.disabled {
@@ -610,41 +612,14 @@
 }
 
 .listItem {
+    color: black;
     padding: 5px 10px;
     cursor: pointer;
     text-transform: capitalize;
     font-family: var(--retro-font);
-    border-bottom: 1px solid var(--retro-box-border);
-}
-
-.listItem:last-child {
-    border-bottom: none;
-}
-
-.listItem:hover:not(.selected) {
-    background: #000;
-    color: #fff;
 }
 
 .listItem.selected {
     background: #000;
     color: #fff;
-}
-
-/* Scrollbar styling */
-.listView::-webkit-scrollbar {
-    width: 10px;
-}
-
-.listView::-webkit-scrollbar-track {
-    background: var(--retro-input-bg);
-}
-
-.listView::-webkit-scrollbar-thumb {
-    background: var(--retro-box-border);
-    border: 1px solid var(--retro-box-border);
-}
-
-.listView::-webkit-scrollbar-thumb:hover {
-    background: #000;
 }

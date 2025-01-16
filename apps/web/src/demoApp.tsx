@@ -1,6 +1,7 @@
-import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, CheckBox, Dropdown, CheckBoxGroup } from '@duck4i/retro-ui';
+import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, Dropdown, CheckBoxGroup, ListView } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 import { useState } from 'react';
+
 
 const ComponentsDemo = () => {
 
@@ -9,7 +10,6 @@ const ComponentsDemo = () => {
     const [w3, setW3] = useState(true);
     const [w4, setW4] = useState(true);
     const [text, setText] = useState('');
-    const [checked, setChecked] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     return (
@@ -18,7 +18,7 @@ const ComponentsDemo = () => {
                 <WindowProvider>
 
                     {w1 &&
-                        <Window title="Mixed components" onClose={() => { setW1(false) }} >
+                        <Window title="Mixed components" onClose={() => { setW1(false) }} x={10} y={10}>
                             <Text label='Hello' />
                             <ButtonGroup>
                                 <Button label='Button' onClick={() => { }} />
@@ -33,10 +33,10 @@ const ComponentsDemo = () => {
                     }
 
                     {w2 &&
-                        <Window title="Label styles" onClose={() => { setW2(false) }} x={150} y={150} width={500} >
+                        <Window title="Label styles" onClose={() => { setW2(false) }} x={450} y={10} width={500} >
                             <Text label='Hello' />
                             <Text label='Hello' bold blink />
-                            <Text label='Hello' backgroundColor='magenta' color='white' />
+                            <Text label='Hello' backgroundColor='yellow' color='black' />
                             <Scrollbar height='90px' alwaysShowVertical padding={10} backgroundColor='cyan' >
                                 <BigText label='Hey bro' />
                             </Scrollbar>
@@ -44,33 +44,39 @@ const ComponentsDemo = () => {
                     }
 
                     {w3 &&
-                        <Window title="Boxes and bars" x={350} y={300} onClose={() => setW3(false)} >
+                        <Window title="Boxes and bars" x={10} y={300} onClose={() => setW3(false)} >
                             <Box vertical gap={3}>
                                 <Text label={`Type: ${text}`} />
                                 <Input defaultValue="Input" onChange={(value) => { setText(value) }} />
                                 <InputBox defaultValue={`InputBox \n with \n multitext`} onChange={(value) => { setText(value) }} readOnly />
                             </Box>
-                            <Box type='inset' >
+                            <Box type='inset' backgroundColor='magenta' >
                                 <Text label='Box inset' />
                             </Box>
+                            <Text label='Progress bar' />
                             <ProgressBar progress={50} max={100} />
                             <CheckBoxGroup toggle options={[
                                 { label: "Check me", checked: true },
                                 { label: "No check me ", checked: false }
                             ]
                             } >
-
                             </CheckBoxGroup>
                         </Window>
                     }
 
                     {w4 &&
-                        <Window title="Lists" x={450} y={550} onClose={() => setW4(false)} >
+                        <Window title="Lists" x={450} y={300} onClose={() => setW4(false)} >
+                            <ListView items={['Item 1', 'Item 2', 'Item 3']} selectedIndex={selectedIndex} onSelect={(index) => setSelectedIndex(index)} />
                             <Dropdown options={['Option 1', 'Option 2', 'Option 3']} selectedOption={selectedIndex} onChange={(selected) => setSelectedIndex(selected)} />
+
                         </Window>
                     }
 
                 </WindowProvider>
+                <div style={{ position: 'absolute', bottom: 0, right: 0 }}>
+                    <Text label={`Retro-UI`} color="white" />
+                    <Text label={`@duck4i 1984`} color="white" />
+                </div>
             </App>
         </div>
     )
