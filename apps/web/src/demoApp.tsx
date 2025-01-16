@@ -22,7 +22,7 @@ export default function DemoApp() {
                             </ButtonGroup>
                         </Window>
 
-                        <Window title="Label styles" onClose={() => { }} x={150} y={150} width={500} gap={10} >
+                        <Window title="Label styles" onClose={() => { }} x={150} y={150} width={500} >
                             <Text label='Hello' />
                             <Text label='Hello' bold blink />
                             <Text label='Hello' backgroundColor='magenta' color='white' />
@@ -31,7 +31,7 @@ export default function DemoApp() {
                             </Scrollbar>
                         </Window>
 
-                        <Window title="Window 3" x={250} y={250} onClose={() => { }} >
+                        <Window title="Window 3" x={350} y={400} onClose={() => { }} >
                             <Box>
                                 <Text label='Box Border' />
                             </Box>
