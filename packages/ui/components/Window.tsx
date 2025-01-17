@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useLayoutEffect } from 'react';
 import { WindowContext } from './WindowProvider';
 import styles from '../global.module.css';
 import { applyDefaultStyle, ComponentProps } from '../utils/ComponentProps';
@@ -7,6 +7,7 @@ export interface WindowProps extends Omit<Partial<ComponentProps>, 'margin'> {
     title: string;
     x?: number;
     y?: number;
+    location?: "coordinate" | "center";
     onClose: () => void;
     children?: React.ReactNode;
 }
@@ -14,7 +15,7 @@ export interface WindowProps extends Omit<Partial<ComponentProps>, 'margin'> {
 /**
  * A draggable window component with retro feel
  */
-export function Window({ title, children, x, y, onClose, ...rest }: WindowProps) {
+export function Window({ title, children, x, y, onClose, location = "coordinate", ...rest }: WindowProps) {
 
     const context = useContext(WindowContext);
     if (!context) {
@@ -26,6 +27,19 @@ export function Window({ title, children, x, y, onClose, ...rest }: WindowProps)
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [z, setZ] = useState(1000);
     const windowRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if (windowRef.current && location === "center") {
+            const rect = windowRef.current.getBoundingClientRect();
+            const parent = windowRef.current.closest("#retro-app-root");
+            if (parent) {
+                const parentRect = parent.getBoundingClientRect();
+                const centeredX = (parentRect.width - rect.width) / 2;
+                const centeredY = (parentRect.height - rect.height) / 2;
+                setPosition({ x: centeredX, y: centeredY });
+            }
+        }
+    }, []);
 
     const updateZIndex = () => {
         const newZ = context?.bringToFront();

@@ -1,7 +1,7 @@
 import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, Dropdown, CheckBoxGroup, ListView } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { pipeline, ProgressInfo } from '@huggingface/transformers';
 
 const ComponentsDemo = () => {
 
@@ -82,11 +82,189 @@ const ComponentsDemo = () => {
     )
 }
 
+const RetroLlama = () => {
+
+    enum State { Welome, ChoseModel, Download, Inference, Error };
+    enum Models {
+        Smol = "HuggingFaceTB/SmolLM2-135M-Instruct",
+        Qwen = "Mozilla/Qwen2.5-0.5B-Instruct",
+        LaMini = "Xenova/gpt2"
+    };
+
+    const [state, setState] = useState(State.Welome);
+    const [modelOptions, setModelOptions] = useState([
+        { label: "Smol", checked: true },
+        { label: "Qwen", checked: false },
+        { label: "LaMini", checked: false }
+    ]);
+    const [deviceMode, setDeviceMode] = useState<'wasm' | 'webgpu'>('wasm');
+
+    const [error, setError] = useState('');
+
+    let pipe: any = null;
+
+    const ErrorWindow = () => {
+        return (
+            <Window title="Error" location='center' width={600} onClose={() => setState(State.ChoseModel)} >
+                <Box vertical border="none">
+                    <Text label={error} backgroundColor='red' color='white' />
+                    <br />
+                    <Button label='Close' onClick={() => setState(State.ChoseModel)} />
+                </Box>
+            </Window>
+        )
+    }
+
+    const DownloadModelWindow = () => {
+        interface FileProgress {
+            name: string;
+            progress: number;
+        }
+
+        const [downloadedFiles, setDownloadedFiles] = useState<FileProgress[]>([]);
+
+        const download = async (url: string) => {
+
+            pipe = await pipeline('text-generation', url, {
+                progress_callback: (info: ProgressInfo) => {
+                    const progress = (info as any).progress;
+                    const name = (info as any).file;
+
+                    if (name) {
+                        let item = downloadedFiles.find(file => file.name === name);
+
+                        if (!item) {
+                            const id = downloadedFiles.push({ name, progress: 0 });
+                            item = downloadedFiles.at(id);
+                        }
+                        if (progress) {
+                            item!.progress = Math.max(item!.progress, progress);
+                        }
+
+                        setDownloadedFiles([...downloadedFiles]);
+                    }
+                },
+                device: deviceMode
+            });
+
+            //const out = await pipe('How are you doing today?');
+            //console.log(out);
+        };
+
+        useEffect(() => {
+            const selectedModel = Models[modelOptions.find(option => option.checked)?.label as keyof typeof Models];
+            console.log('Downloading model:', selectedModel);
+
+            download(selectedModel).then(() => {
+                setState(State.Inference);
+            }).catch((err) => {
+                setError(err.toString());
+                setState(State.Error);
+            });
+        }, []);
+
+        return (
+            <Window title="Downloading..." x={10} y={10} width={480} onClose={() => { }} >
+                <Text label='Download in progress..' />
+                <br />
+                {
+                    downloadedFiles.map((info, index) => {
+                        return (
+                            <div key={index}>
+                                <Text key={`lb-${index}`} label={` ${info.name}..`} />
+                                <ProgressBar key={`pb-${index}`} progress={info.progress} max={100} />
+                            </div>
+                        )
+                    })
+                }
+            </Window>
+        )
+    }
+
+    const ChoseModelWindow = () => {
+
+        return (
+            <Window title="Download AI models" location='center' width={480} onClose={() => { }} >
+                <Box vertical border="none">
+                    <Text label='Download AI models' color='silver' backgroundColor='green' />
+                    <br />
+                    <Text label='Please select the AI models you would like to download.' />
+                    <CheckBoxGroup toggle onChange={(options) => { setModelOptions(options) }} options={modelOptions} padding={5} />
+                    <br />
+                    <Box padding={10}>
+                        <Text label='Device mode:' />
+                        <Dropdown options={['wasm', 'webgpu']} selectedOption={deviceMode === 'wasm' ? 0 : 1} onChange={(selected) => setDeviceMode(selected === 0 ? 'wasm' : 'webgpu')} />
+                    </Box>
+                    <br />
+                    <Button label='Download' onClick={() => {
+                        setState(State.Download);
+                    }} />
+                </Box>
+            </Window>
+        )
+    }
+
+    const InferenceWindow = () => {
+        return (
+            <Window title="Inference" location='center' width={480} onClose={() => setState(State.Welome)} >
+                <Box vertical border="none">
+                    <Text label='Inference' color='silver' backgroundColor='green' />
+                    <br />
+                    <Text label='Please select the AI model you would like to use for inference.' />
+                    <br />
+                    <Button label='Inference' onClick={() => setState(State.ChoseModel)} />
+                </Box>
+            </Window>
+        )
+    }
+
+    const WelcomeWindow = () => {
+
+        const close = () => {
+            setState(State.ChoseModel);
+        }
+
+        return (
+
+            <Window title="Welcome to Retro Llama" location='center' width={500} onClose={close} >
+                <Box vertical border="none">
+                    <Text label='Welcome to Retro LLaMA!' color='silver' backgroundColor='green' />
+                    <br />
+                    <Text label='This project is a usable demo of the Retro-UI components framework for React with HF Transformers.' />
+                    <Text label='It is a fun and educational project that aims to provide a simple and easy-to-use set of components for building retro-styled applications.' />
+                    <br />
+                    <Text label='Built for fun by @duck4i' blink />
+                    <br />
+                    <Button label='Chose AI model' onClick={close} />
+                </Box>
+            </Window>
+        )
+    }
+
+    return (
+        <App width={800} height={600}>
+            <WindowProvider>
+                {state === State.Welome && <WelcomeWindow />}
+                {state === State.ChoseModel && <ChoseModelWindow />}
+                {state === State.Download && <DownloadModelWindow />}
+                {state === State.Inference && <InferenceWindow />}
+                {state === State.Error && <ErrorWindow />}
+            </WindowProvider>
+            <div style={{ position: 'absolute', bottom: 0, left: 5 }}>
+                <Text label={`Retro-LLaMA`} color="white" />
+                <Text label={`@duck4i 1984`} color="white" />
+            </div>
+        </App>
+    )
+}
+
 export default function DemoApp() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className='demo'>
             <h1>@duck4i/retro-llama</h1>
-            <ComponentsDemo />
+            {false && <ComponentsDemo />}
+            <RetroLlama />
+            <p>Code on <a href='https://github.com/duck4i/retro-ui' target='_blank'> GitHub </a></p>
         </div>
     )
 }
