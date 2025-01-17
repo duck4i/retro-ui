@@ -82,6 +82,8 @@ const ComponentsDemo = () => {
     )
 }
 
+let pipe: any = null;
+
 const RetroLlama = () => {
 
     enum State { Welome, ChoseModel, Download, Inference, Error };
@@ -100,8 +102,6 @@ const RetroLlama = () => {
     const [deviceMode, setDeviceMode] = useState<'wasm' | 'webgpu'>('wasm');
 
     const [error, setError] = useState('');
-
-    let pipe: any = null;
 
     const ErrorWindow = () => {
         return (
@@ -165,7 +165,6 @@ const RetroLlama = () => {
 
         return (
             <Window title="Downloading..." x={10} y={10} width={480} onClose={() => { }} >
-                <Text label='Download in progress..' />
                 <br />
                 {
                     downloadedFiles.map((info, index) => {
@@ -205,12 +204,33 @@ const RetroLlama = () => {
     }
 
     const InferenceWindow = () => {
+
+        const [answer, setAnswer] = useState('');
+
+        const inference = async (text: string): Promise<string> => {
+            const out = await pipe(text);
+            console.log(out);
+            return out[0].generated_text;
+        }
+
+        useEffect(() => {
+
+            inference("How are you").then((str) => {
+                if (str) {
+                    setAnswer(str);
+                }
+            }).catch((err) => {
+                console.error("Error", err);
+            });
+
+        }, [])
+
         return (
             <Window title="Inference" location='center' width={480} onClose={() => setState(State.Welome)} >
                 <Box vertical border="none">
                     <Text label='Inference' color='silver' backgroundColor='green' />
                     <br />
-                    <Text label='Please select the AI model you would like to use for inference.' />
+                    <Text label={answer} />
                     <br />
                     <Button label='Inference' onClick={() => setState(State.ChoseModel)} />
                 </Box>
