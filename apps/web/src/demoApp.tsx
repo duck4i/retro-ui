@@ -1,7 +1,7 @@
 import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, Dropdown, CheckBoxGroup, ListView } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 import { useEffect, useState } from 'react';
-import { pipeline, ProgressInfo, TextGenerationPipeline } from '@huggingface/transformers';
+import { Device, Model, Pipeline } from './pipeline';
 
 const ComponentsDemo = () => {
 
@@ -82,52 +82,14 @@ const ComponentsDemo = () => {
     )
 }
 
-let pipe: TextGenerationPipeline;
-
-enum State { Welome, ChoseModel, Download, Inference, Error };
-enum Models {
-    Smol = 'Smol',
-    Qwen = 'Qwen',
-    LLama = 'LLama'
-};
-
-type Device = 'wasm' | 'webgpu';
-type DataType = 'q4' | 'q8' | 'fp16';
-
-interface ModelInfo {
-    url: string;
-    dType: DataType;
-    file?: string;
-}
-
-const modelInfos: Record<string, ModelInfo> = {
-
-    [Models.Smol]: {
-        url: 'HuggingFaceTB/SmolLM2-360M-Instruct',
-        dType: 'q4'
-    },
-    [Models.Qwen]: {
-        url: 'Mozilla/Qwen2.5-0.5B-Instruct',
-        dType: 'q4'
-    },
-    [Models.LLama]: {
-        url: 'onnx-community/Llama-3.2-1B-Instruct',
-        dType: 'q8',
-    }
-};
-
-interface ChatMessage {
-    role: 'system' | 'user' | 'assistant';
-    content: string;
-}
 
 const RetroLlama = () => {
-
+    enum State { Welome, ChoseModel, Download, Inference, Error };
     const [state, setState] = useState(State.Welome);
     const [modelOptions, setModelOptions] = useState([
-        { label: [Models.Smol].toString(), checked: true },
-        { label: [Models.Qwen].toString(), checked: false },
-        { label: [Models.LLama].toString(), checked: false }
+        { label: [Model.Smol].toString(), checked: true },
+        { label: [Model.Qwen].toString(), checked: false },
+        { label: [Model.LLama].toString(), checked: false }
     ]);
     const [deviceMode, setDeviceMode] = useState<Device>('wasm');
 
@@ -146,51 +108,24 @@ const RetroLlama = () => {
     }
 
     const DownloadModelWindow = () => {
-        interface FileProgress {
-            name: string;
-            progress: number;
-        }
 
+        type DownloadInfo = Record<string, number>;
         const [modelName, setModelName] = useState('');
-        const [downloadedFiles, setDownloadedFiles] = useState<FileProgress[]>([]);
-
-        const download = async (url: string, file: string, dtype: DataType) => {
-
-            pipe = await pipeline('text-generation', url, {
-                model_file_name: file,
-                dtype: dtype,
-                progress_callback: (info: ProgressInfo) => {
-                    const progress = (info as any).progress;
-                    const name = (info as any).file;
-
-                    if (name) {
-                        let item = downloadedFiles.find(file => file.name === name);
-
-                        if (!item) {
-                            const id = downloadedFiles.push({ name, progress: 0 });
-                            item = downloadedFiles.at(id);
-                        }
-                        if (progress) {
-                            item!.progress = Math.max(item!.progress, progress);
-                        }
-
-                        setDownloadedFiles([...downloadedFiles]);
-                    }
-                },
-                device: deviceMode
-            });
-        };
+        const [downloadedFiles, setDownloadedFiles] = useState<DownloadInfo>({});
 
         useEffect(() => {
-            const selectedModel = Models[modelOptions.find(option => option.checked)?.label as keyof typeof Models];
-            const url = modelInfos[selectedModel].url;
-            const file = modelInfos[selectedModel].file ?? 'model';
-            const dtype: DataType = modelInfos[selectedModel].dType;
+            const selectedModel = Model[modelOptions.find(option => option.checked)?.label as keyof typeof Model];
 
-            setModelName(url);
-            console.log(`Downloading model: ${url} file: ${file} dtype: ${dtype}`);
+            const pipe = Pipeline.getInstance();
 
-            download(url, file, dtype).then(() => {
+            pipe.addDownloadCallback((progress, file, url) => {
+                const current = downloadedFiles[file] ?? 0;
+                downloadedFiles[file] = Math.max(current, progress);
+                setDownloadedFiles({ ...downloadedFiles });
+                setModelName(url);
+            });
+
+            pipe.init(selectedModel, deviceMode).then(() => {
                 setState(State.Inference);
             }).catch((err) => {
                 console.error(err);
@@ -204,11 +139,11 @@ const RetroLlama = () => {
                 <Text label={modelName} />
                 <br />
                 {
-                    downloadedFiles.map((info, index) => {
+                    Object.entries(downloadedFiles).map(([name, progress], index) => {
                         return (
                             <div key={index}>
-                                <Text key={`lb-${index}`} label={` ${info.name}..`} />
-                                <ProgressBar key={`pb-${index}`} progress={info.progress} max={100} />
+                                <Text key={`lb-${index}`} label={` ${name}..`} />
+                                <ProgressBar key={`pb-${index}`} progress={progress} max={100} />
                             </div>
                         )
                     })
@@ -217,7 +152,7 @@ const RetroLlama = () => {
         )
     }
 
-    const ChoseModelWindow = () => {
+    const ChooseModelWindow = () => {
 
         return (
             <Window title="Download AI models" location='center' width={480} onClose={() => { }} >
@@ -244,43 +179,14 @@ const RetroLlama = () => {
 
         const [answer, setAnswer] = useState('');
 
-        const inference = async (text: any): Promise<string> => {
-            const out = await pipe(text, {
-                max_new_tokens: 128,
-                do_sample: false,
-                return_full_text: false,
-            });
-
-            console.log(out);
-            return (out[0] as any).generated_text;
-        }
-
         useEffect(() => {
-
-            const message: ChatMessage[] = [
-                {
-                    role: 'system',
-                    content: 'You are a helpful assistant.'
-                },
-                {
-                    role: 'user',
-                    content: 'How far is London from Paris?'
-                }
-            ];
-
-            const text = pipe.tokenizer.apply_chat_template(message, {
-                tokenize: false,
-                add_generation_prompt: true
-            });
-
-            inference(text).then((str) => {
+            Pipeline.getInstance().infer("How far is london from paris?").then((str) => {
                 if (str) {
                     setAnswer(str);
                 }
             }).catch((err) => {
                 console.error("Error", err);
             });
-
         }, [])
 
         return (
@@ -323,7 +229,7 @@ const RetroLlama = () => {
         <App width={800} height={600}>
             <WindowProvider>
                 {state === State.Welome && <WelcomeWindow />}
-                {state === State.ChoseModel && <ChoseModelWindow />}
+                {state === State.ChoseModel && <ChooseModelWindow />}
                 {state === State.Download && <DownloadModelWindow />}
                 {state === State.Inference && <InferenceWindow />}
                 {state === State.Error && <ErrorWindow />}
