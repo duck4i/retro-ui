@@ -1,7 +1,7 @@
 import { App, Window, WindowProvider, Button, Text, ButtonGroup, Box, BigText, Scrollbar, ProgressBar, Input, InputBox, Dropdown, CheckBoxGroup, ListView } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css'
 import { useEffect, useState } from 'react';
-import { pipeline, ProgressInfo } from '@huggingface/transformers';
+import { pipeline, ProgressInfo, TextGenerationPipeline } from '@huggingface/transformers';
 
 const ComponentsDemo = () => {
 
@@ -82,24 +82,54 @@ const ComponentsDemo = () => {
     )
 }
 
-let pipe: any = null;
+let pipe: TextGenerationPipeline;
+
+enum State { Welome, ChoseModel, Download, Inference, Error };
+enum Models {
+    Smol = 'Smol',
+    Qwen = 'Qwen',
+    LLama = 'LLama'
+};
+
+type Device = 'wasm' | 'webgpu';
+type DataType = 'q4' | 'q8' | 'fp16';
+
+interface ModelInfo {
+    url: string;
+    dType: DataType;
+    file?: string;
+}
+
+const modelInfos: Record<string, ModelInfo> = {
+
+    [Models.Smol]: {
+        url: 'HuggingFaceTB/SmolLM2-360M-Instruct',
+        dType: 'q4'
+    },
+    [Models.Qwen]: {
+        url: 'Mozilla/Qwen2.5-0.5B-Instruct',
+        dType: 'q4'
+    },
+    [Models.LLama]: {
+        url: 'onnx-community/Llama-3.2-1B-Instruct',
+        dType: 'q8',
+    }
+};
+
+interface ChatMessage {
+    role: 'system' | 'user' | 'assistant';
+    content: string;
+}
 
 const RetroLlama = () => {
 
-    enum State { Welome, ChoseModel, Download, Inference, Error };
-    enum Models {
-        Smol = "HuggingFaceTB/SmolLM2-135M-Instruct",
-        Qwen = "Mozilla/Qwen2.5-0.5B-Instruct",
-        LaMini = "Xenova/gpt2"
-    };
-
     const [state, setState] = useState(State.Welome);
     const [modelOptions, setModelOptions] = useState([
-        { label: "Smol", checked: true },
-        { label: "Qwen", checked: false },
-        { label: "LaMini", checked: false }
+        { label: [Models.Smol].toString(), checked: true },
+        { label: [Models.Qwen].toString(), checked: false },
+        { label: [Models.LLama].toString(), checked: false }
     ]);
-    const [deviceMode, setDeviceMode] = useState<'wasm' | 'webgpu'>('wasm');
+    const [deviceMode, setDeviceMode] = useState<Device>('wasm');
 
     const [error, setError] = useState('');
 
@@ -121,11 +151,14 @@ const RetroLlama = () => {
             progress: number;
         }
 
+        const [modelName, setModelName] = useState('');
         const [downloadedFiles, setDownloadedFiles] = useState<FileProgress[]>([]);
 
-        const download = async (url: string) => {
+        const download = async (url: string, file: string, dtype: DataType) => {
 
             pipe = await pipeline('text-generation', url, {
+                model_file_name: file,
+                dtype: dtype,
                 progress_callback: (info: ProgressInfo) => {
                     const progress = (info as any).progress;
                     const name = (info as any).file;
@@ -146,18 +179,21 @@ const RetroLlama = () => {
                 },
                 device: deviceMode
             });
-
-            //const out = await pipe('How are you doing today?');
-            //console.log(out);
         };
 
         useEffect(() => {
             const selectedModel = Models[modelOptions.find(option => option.checked)?.label as keyof typeof Models];
-            console.log('Downloading model:', selectedModel);
+            const url = modelInfos[selectedModel].url;
+            const file = modelInfos[selectedModel].file ?? 'model';
+            const dtype: DataType = modelInfos[selectedModel].dType;
 
-            download(selectedModel).then(() => {
+            setModelName(url);
+            console.log(`Downloading model: ${url} file: ${file} dtype: ${dtype}`);
+
+            download(url, file, dtype).then(() => {
                 setState(State.Inference);
             }).catch((err) => {
+                console.error(err);
                 setError(err.toString());
                 setState(State.Error);
             });
@@ -165,6 +201,7 @@ const RetroLlama = () => {
 
         return (
             <Window title="Downloading..." x={10} y={10} width={480} onClose={() => { }} >
+                <Text label={modelName} />
                 <br />
                 {
                     downloadedFiles.map((info, index) => {
@@ -207,15 +244,36 @@ const RetroLlama = () => {
 
         const [answer, setAnswer] = useState('');
 
-        const inference = async (text: string): Promise<string> => {
-            const out = await pipe(text);
+        const inference = async (text: any): Promise<string> => {
+            const out = await pipe(text, {
+                max_new_tokens: 128,
+                do_sample: false,
+                return_full_text: false,
+            });
+
             console.log(out);
-            return out[0].generated_text;
+            return (out[0] as any).generated_text;
         }
 
         useEffect(() => {
 
-            inference("How are you").then((str) => {
+            const message: ChatMessage[] = [
+                {
+                    role: 'system',
+                    content: 'You are a helpful assistant.'
+                },
+                {
+                    role: 'user',
+                    content: 'How far is London from Paris?'
+                }
+            ];
+
+            const text = pipe.tokenizer.apply_chat_template(message, {
+                tokenize: false,
+                add_generation_prompt: true
+            });
+
+            inference(text).then((str) => {
                 if (str) {
                     setAnswer(str);
                 }
