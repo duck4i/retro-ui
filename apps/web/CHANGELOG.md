@@ -1,5 +1,24 @@
 # web
 
+## 0.4.1
+
+### Patch Changes
+
+- fixes for input and input box. example update
+- Updated dependencies
+  - @duck4i/retro-ui@0.4.1
+
+## 0.4.0
+
+### Minor Changes
+
+- many fixes and mulithreaded llama example
+
+### Patch Changes
+
+- Updated dependencies
+  - @duck4i/retro-ui@0.4.0
+
 ## 0.3.6
 
 ### Patch Changes

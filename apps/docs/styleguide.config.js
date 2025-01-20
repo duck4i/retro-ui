@@ -21,6 +21,8 @@ module.exports = {
         Window: './Window',
         Input: './Input',
         InputBox: './InputBox',
+        ListView: './ListView',
+        Dropdown: './Dropdown',
         BigText: './BigText',
         ProgressBar: './ProgressBar',
         WindowProvider: './WindowProvider',

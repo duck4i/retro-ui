@@ -5,12 +5,13 @@ import { useLayoutEffect, useRef } from "react";
 
 export interface InputBoxProps extends Partial<ComponentProps> {
     defaultValue?: string;
+    value?: string;
     border?: boolean;
     readOnly?: boolean;
-    onChange: (value: string) => void;
+    onChange?: (value: string) => void;
 }
 
-export const InputBox = ({ defaultValue, border, onChange, readOnly, ...rest }: InputBoxProps) => {
+export const InputBox = ({ value, defaultValue, border, onChange, readOnly, ...rest }: InputBoxProps) => {
 
     const containerRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,6 +30,7 @@ export const InputBox = ({ defaultValue, border, onChange, readOnly, ...rest }: 
                 <textarea ref={containerRef}
                     className={[classes.inputBox, border ? classes.inputBorder : ''].join(" ")}
                     defaultValue={defaultValue}
+                    value={value}
                     onChange={(e) => {
                         calculateHeight();
                         onChange?.call(this, e.target.value as string)

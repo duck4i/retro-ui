@@ -4,7 +4,13 @@
 
 A modern React UI framework with distinctive retro vibes. Quirky and fugly by design.
 
-![screenshot](screenshot.png)
+## Gallery
+
+![components](docs/screenshot.png)
+
+| ![r1](docs/r1.png) | ![r2](docs/r2.png) |
+|--------------------|--------------------|
+| ![r3](docs/r3.png) | ![r4](docs/r4.png) |
 
 ## Retro-LLama demo 
 

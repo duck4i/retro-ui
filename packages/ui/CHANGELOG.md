@@ -1,5 +1,17 @@
 # @duck4i/retro-ui
 
+## 0.4.1
+
+### Patch Changes
+
+- fixes for input and input box. example update
+
+## 0.4.0
+
+### Minor Changes
+
+- many fixes and mulithreaded llama example
+
 ## 0.3.6
 
 ### Patch Changes
