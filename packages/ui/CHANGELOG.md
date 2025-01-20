@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.4.0
+
+### Minor Changes
+
+- many fixes and mulithreaded llama example
+
 ## 0.3.6
 
 ### Patch Changes

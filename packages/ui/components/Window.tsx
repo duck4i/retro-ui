@@ -57,6 +57,16 @@ export function Window({ title, children, x, y, onClose, location = "coordinate"
         updateZIndex();
     };
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        const touch = e.touches[0];
+        setIsDragging(true);
+        setOffset({
+            x: touch.clientX - position.x,
+            y: touch.clientY - position.y,
+        });
+        updateZIndex();
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
         if (isDragging) {
             const parent = (e.target as HTMLElement).closest("#retro-app-root");
@@ -77,16 +87,45 @@ export function Window({ title, children, x, y, onClose, location = "coordinate"
         }
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+        if (isDragging) {
+            const touch = e.touches[0];
+            const parent = (touch.target as HTMLElement).closest("#retro-app-root");
+            if (parent && windowRef.current) {
+                const parentRect = parent.getBoundingClientRect();
+                const windowRect = windowRef.current.getBoundingClientRect();
+                const newX = touch.clientX - offset.x;
+                const newY = touch.clientY - offset.y;
+
+                const constrainedX = Math.max(0, Math.min(newX, parentRect.width - windowRect.width));
+                const constrainedY = Math.max(0, Math.min(newY, parentRect.height - windowRect.height));
+
+                setPosition({
+                    x: constrainedX,
+                    y: constrainedY,
+                });
+            }
+        }
+    };
+
     const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const handleTouchEnd = () => {
         setIsDragging(false);
     };
 
     useEffect(() => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchmove', handleTouchMove);
+        document.addEventListener('touchend', handleTouchEnd);
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
         };
     }, [isDragging, offset]);
 
@@ -102,7 +141,7 @@ export function Window({ title, children, x, y, onClose, location = "coordinate"
                     ...applyDefaultStyle(rest),
                 }}
         >
-            <div className={styles.titleBar} onMouseDown={handleMouseDown}>
+            <div className={styles.titleBar} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart}>
                 <span>{title}</span>
                 <button onClick={onClose}>X</button>
             </div>
