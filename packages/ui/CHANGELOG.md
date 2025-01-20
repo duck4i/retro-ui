@@ -1,5 +1,11 @@
 # @duck4i/retro-ui
 
+## 0.4.2
+
+### Patch Changes
+
+- window drag fix
+
 ## 0.4.1
 
 ### Patch Changes
