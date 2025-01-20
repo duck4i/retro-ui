@@ -77,11 +77,11 @@ const DownloadModelWindow = ({ model, mode }: DownloadModelProps) => {
     )
 }
 
-interface ChooseModelProps {
+interface SelectModelProps {
     onSelect: (model: Model, mode: Device) => void;
 };
 
-const ChooseModelWindow = ({ onSelect }: ChooseModelProps) => {
+const SelectModelWindow = ({ onSelect }: SelectModelProps) => {
     const [modelOptions, setModelOptions] = useState([
         { label: [Model.Smol].toString(), checked: true },
         { label: [Model.Qwen].toString(), checked: false },
@@ -142,7 +142,7 @@ const InferenceWindow = () => {
 
 const RetroLlama = () => {
 
-    enum State { Welome, ChoseModel, Download, Inference, Error };
+    enum State { Welome, Select, Download, Inference, Error };
     const [state, setState] = useState(State.Welome);
     const [model, setModel] = useState<Model>(Model.Smol);
     const [device, setDevice] = useState<Device>('wasm');
@@ -158,11 +158,11 @@ const RetroLlama = () => {
     }, [error, ready]);
 
     const onWelcomeNext = () => {
-        setState(State.ChoseModel);
+        setState(State.Select);
     }
 
     const onErrorClose = () => {
-        setState(State.ChoseModel);
+        setState(State.Select);
     }
 
     const onModelSelected = (model: Model, mode: Device) => {
@@ -176,7 +176,7 @@ const RetroLlama = () => {
 
             <WindowProvider>
                 {state === State.Welome && <WelcomeWindow onProceed={onWelcomeNext} />}
-                {state === State.ChoseModel && <ChooseModelWindow onSelect={onModelSelected} />}
+                {state === State.Select && <SelectModelWindow onSelect={onModelSelected} />}
                 {state === State.Download && <DownloadModelWindow mode={device} model={model} />}
                 {state === State.Inference && <InferenceWindow />}
                 {state === State.Error && <ErrorWindow error={error ?? "unknown"} onClose={onErrorClose}/>}
