@@ -1,4 +1,4 @@
-import { pipeline, ProgressInfo, TextGenerationPipeline } from '@huggingface/transformers';
+import { pipeline, ProgressInfo, TextGenerationPipeline, TextStreamer } from '@huggingface/transformers';
 
 export enum Model {
     Smol = 'Smol',
@@ -38,6 +38,7 @@ const modelInfos: Record<string, ModelInfo> = {
 
 export type DownloadCallback = (progress: number, file: string, modelUrl: string) => void;
 export type TaskReadyCallback = (task: string, model: string) => void;
+export type InferStreamCallback = (output: any) => void;
 
 export class Pipeline {
     static instance: Pipeline;
@@ -93,33 +94,27 @@ export class Pipeline {
         });
     }
 
-    async infer(input: string): Promise<string> {
+    async infer(chat: ChatMessage[], streamCallback: InferStreamCallback): Promise<string> {
         if (this.pipeline === null) {
             throw new Error('Pipeline not initialized');
         }
 
-        const message: ChatMessage[] = [
-            {
-                role: 'system',
-                content: 'You are a helpful assistant.'
-            },
-            {
-                role: 'user',
-                content: input
-            }
-        ];
-
-        const prompt = this.pipeline.tokenizer.apply_chat_template(message, {
+        const prompt = this.pipeline.tokenizer.apply_chat_template(chat, {
             tokenize: false,
             add_generation_prompt: true
         }) as any;
+
+        const streamer = new TextStreamer(this.pipeline.tokenizer, {
+            skip_prompt: true
+        });
+        streamer.callback_function = streamCallback;
 
         const out = await this.pipeline(prompt, {
             max_new_tokens: 128,
             do_sample: false,
             return_full_text: false,
+            streamer: streamer
         });
-
         return (out[0] as any).generated_text;
     }
 }

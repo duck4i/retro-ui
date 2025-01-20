@@ -1,4 +1,4 @@
-import { Device, Model } from "./pipeline";
+import { ChatMessage, ChatMessage, Device, Model } from "./pipeline";
 
 export enum MessageType {
     Init = 'init',
@@ -17,7 +17,7 @@ export interface InitMessage {
 
 export interface InferMessage {
     type: MessageType.Infer;
-    input: string;
+    input: ChatMessage[];
 }
 
 export type WorkerRequest = InitMessage | InferMessage;
@@ -31,6 +31,7 @@ export interface OnDownloadMessage {
 
 export interface OnInferMessage {
     type: MessageType.OnInfer;
+    partial: boolean;
     output: string;
 }
 

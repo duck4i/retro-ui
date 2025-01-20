@@ -1,15 +1,16 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MessageType, WorkerResponse } from "./messages";
-import { Device, Model } from "./pipeline";
+import { ChatMessage, Device, Model } from "./pipeline";
 
 export interface WorkerContextData {
     modelName: string;
     downloadedFiles: Record<string, number>;
     inferenceOutput: string;
+    inferenceStream: string;
     ready: boolean;
     error?: string;
     downloadModel: (model: Model, deviceMode: Device) => void;
-    startInference: (text: string) => void;
+    startInference: (chat: ChatMessage[]) => void;
 }
 
 const WorkerContext = createContext<WorkerContextData | null>(null);
@@ -19,6 +20,7 @@ export const WorkerProvider = ({ children }: { children: React.ReactNode }) => {
     const [modelName, setModelName] = useState('');
     const [downloadedFiles, setDownloadedFiles] = useState<Record<string, number>>({});
     const [inferenceOutput, setInferenceOutput] = useState<string>('');
+    const [inferenceStream, setInferenceStream] = useState<string>('');
     const [ready, setReady] = useState(false);
     const [error, setError] = useState('');
 
@@ -38,8 +40,12 @@ export const WorkerProvider = ({ children }: { children: React.ReactNode }) => {
                 }
                 case MessageType.OnInfer: {
                     const { output } = message;
-                    setInferenceOutput(output);
-                    break;
+                    if (message.partial) {
+                        setInferenceStream(prev => prev + output);
+                        return;
+                    } else {
+                        setInferenceOutput(output);
+                    } break;
                 }
                 case MessageType.OnReady: {
                     //const { task, model } = message;
@@ -66,12 +72,14 @@ export const WorkerProvider = ({ children }: { children: React.ReactNode }) => {
         workerRef.current?.postMessage({ type: MessageType.Init, model: model, device: deviceMode });
     }, []);
 
-    const startInference = useCallback((text: string) => {
-        workerRef.current?.postMessage({ type: MessageType.Infer, input: text });
+    const startInference = useCallback((chat: ChatMessage[]) => {
+        setInferenceOutput('');
+        setInferenceStream('');
+        workerRef.current?.postMessage({ type: MessageType.Infer, input: chat });
     }, []);
 
     return (
-        <WorkerContext.Provider value={{ modelName, downloadedFiles, inferenceOutput, ready, error, downloadModel, startInference }}>
+        <WorkerContext.Provider value={{ modelName, downloadedFiles, inferenceOutput, inferenceStream, ready, error, downloadModel, startInference }}>
             {children}
         </WorkerContext.Provider>
     );

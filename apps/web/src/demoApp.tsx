@@ -1,7 +1,7 @@
 import { App, Box, Button, CheckBoxGroup, Dropdown, InputBox, ProgressBar, Scrollbar, Text, Window, WindowProvider } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css';
 import { useEffect, useState } from 'react';
-import { Device, Model } from './pipeline';
+import { ChatMessage, Device, Model } from './pipeline';
 import { useWorker, WorkerProvider } from './workerContext';
 
 interface WelcomeProps {
@@ -116,7 +116,7 @@ interface InferenceProps {
 }
 
 const InferenceWindow = ({ onClose }: InferenceProps) => {
-    const { inferenceOutput, startInference } = useWorker()!;
+    const { inferenceOutput, inferenceStream, startInference } = useWorker()!;
 
     const [enabled, setEnabled] = useState(true);
     const [question, setQuestion] = useState('How many ducks can one own?');
@@ -125,19 +125,40 @@ const InferenceWindow = ({ onClose }: InferenceProps) => {
     interface Info { type: Type; content: string; }
     const [answers, setAnswers] = useState<Info[]>([]);
 
+    const [chat, setChat] = useState<ChatMessage[]>(
+        [
+            {
+                role: 'system',
+                content: 'You are a helpful assistant.'
+            },
+        ]
+    );
+
     const onInference = () => {
         setEnabled(false);
         setQuestion('');
-        setAnswers([...answers, { type: Type.Question, content: question }]);
-        startInference(question);
+        const chats = [...chat];
+        chats.push({ role: 'user', content: question });
+        setChat(chats);
+
+        setAnswers([...answers, { type: Type.Question, content: question }, { type: Type.Answer, content: '' }]);
+        startInference(chats);
     }
 
     useEffect(() => {
         if (inferenceOutput) {
-            setAnswers([...answers, { type: Type.Answer, content: inferenceOutput }]);
+            setChat([...chat, { role: 'assistant', content: inferenceOutput }]);
             setEnabled(true);
         }
-    }, [inferenceOutput])
+    }, [inferenceOutput]);
+
+    useEffect(() => {
+        const last = answers[answers.length - 1];
+        if (last) {
+            last.content = inferenceStream;
+            setAnswers([...answers]);
+        }
+    }, [inferenceStream]);
 
     return (
         <Window title="Inference" location='center' width={700} height={550} onClose={onClose} >
@@ -167,7 +188,7 @@ const InferenceWindow = ({ onClose }: InferenceProps) => {
 const RetroLlama = () => {
 
     enum State { Welome, Select, Download, Inference, Error };
-    const [state, setState] = useState(State.Inference);
+    const [state, setState] = useState(State.Welome);
     const [model, setModel] = useState<Model>(Model.Smol);
     const [device, setDevice] = useState<Device>('wasm');
     const { error, ready } = useWorker()!;

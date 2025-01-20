@@ -26,11 +26,15 @@ self.onmessage = async (event) => {
         }
         case MessageType.Infer: {
             const { input } = message;
+            console.log('[Worker] Infer:', input);
             try {
                 if (pipeline === null) {
                     throw new Error('Pipeline not initialized');
                 }
-                const output = await pipeline.infer(input);
+                const output = await pipeline.infer(input, (fragment) => {
+                    self.postMessage({ type: MessageType.OnInfer, partial: true, output: fragment });
+                });
+
                 self.postMessage({ type: MessageType.OnInfer, output });
             } catch (error) {
                 self.postMessage({ type: MessageType.OnError, error: error });
