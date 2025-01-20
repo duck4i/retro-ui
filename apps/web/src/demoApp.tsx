@@ -242,7 +242,10 @@ export default function DemoApp() {
             <WorkerProvider>
                 <RetroLlama />
             </WorkerProvider>
-            <p>Code on <a href='https://github.com/duck4i/retro-ui' target='_blank'> GitHub </a></p>
+            <div className='footer'>
+                <p>Code on <a href='https://github.com/duck4i/retro-ui' target='_blank'> GitHub </a></p>
+                <p>Docs on <a href='https://retro-ui.pages.dev/' target='_blank'> Cloudflare </a></p>
+            </div>
         </div>
     )
 }
