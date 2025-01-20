@@ -66,15 +66,14 @@ export function Window({ title, children, x, y, onClose, location = "coordinate"
         });
         updateZIndex();
     };
-
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMove = (clientX: number, clientY: number) => {
         if (isDragging) {
-            const parent = (e.target as HTMLElement).closest("#retro-app-root");
+            const parent = windowRef?.current?.closest("#retro-app-root");
             if (parent && windowRef.current) {
                 const parentRect = parent.getBoundingClientRect();
                 const windowRect = windowRef.current.getBoundingClientRect();
-                const newX = e.clientX - offset.x;
-                const newY = e.clientY - offset.y;
+                const newX = clientX - offset.x;
+                const newY = clientY - offset.y;
 
                 const constrainedX = Math.max(0, Math.min(newX, parentRect.width - windowRect.width));
                 const constrainedY = Math.max(0, Math.min(newY, parentRect.height - windowRect.height));
@@ -87,25 +86,13 @@ export function Window({ title, children, x, y, onClose, location = "coordinate"
         }
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+        handleMove(e.clientX, e.clientY);
+    };
+
     const handleTouchMove = (e: TouchEvent) => {
-        if (isDragging) {
-            const touch = e.touches[0];
-            const parent = (touch.target as HTMLElement).closest("#retro-app-root");
-            if (parent && windowRef.current) {
-                const parentRect = parent.getBoundingClientRect();
-                const windowRect = windowRef.current.getBoundingClientRect();
-                const newX = touch.clientX - offset.x;
-                const newY = touch.clientY - offset.y;
-
-                const constrainedX = Math.max(0, Math.min(newX, parentRect.width - windowRect.width));
-                const constrainedY = Math.max(0, Math.min(newY, parentRect.height - windowRect.height));
-
-                setPosition({
-                    x: constrainedX,
-                    y: constrainedY,
-                });
-            }
-        }
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
     };
 
     const handleMouseUp = () => {
