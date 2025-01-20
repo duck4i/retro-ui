@@ -1,4 +1,4 @@
-import { ChatMessage, ChatMessage, Device, Model } from "./pipeline";
+import { ChatMessage, Device, Model } from "./pipeline";
 
 export enum MessageType {
     Init = 'init',
