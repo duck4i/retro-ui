@@ -37,11 +37,13 @@ const modelInfos: Record<string, ModelInfo> = {
 };
 
 export type DownloadCallback = (progress: number, file: string, modelUrl: string) => void;
+export type TaskReadyCallback = (task: string, model: string) => void;
 
 export class Pipeline {
     static instance: Pipeline;
     pipeline: TextGenerationPipeline | null;
     downloadCallbacks: DownloadCallback[] = [];
+    readyCallbacks: TaskReadyCallback[] = [];    
 
     constructor() {
         this.pipeline = null;
@@ -58,6 +60,10 @@ export class Pipeline {
         this.downloadCallbacks.push(callback);
     }
 
+    addReadyCallback(callback: TaskReadyCallback) {
+        this.readyCallbacks.push(callback);
+    }
+
     async init(model: Model, device: Device = 'wasm') {
         const url = modelInfos[model].url;
         const file = modelInfos[model].file ?? 'model';
@@ -67,12 +73,19 @@ export class Pipeline {
             model_file_name: file,
             dtype: dtype,
             progress_callback: (info: ProgressInfo) => {
-                if (info && info.status === 'progress') {
-                    const progress = (info as any).progress;
-                    const name = (info as any).file;
+                if (info) {
+                    if (info.status === 'progress') {
+                        const progress = (info as any).progress;
+                        const name = (info as any).file;
 
-                    if (name && progress) {
-                        this.downloadCallbacks.forEach(callback => callback(progress, name, url));
+                        if (name && progress) {
+                            this.downloadCallbacks.forEach(callback => callback(progress, name, url));
+                        }
+                    }
+                    if (info.status === 'ready'){
+                        const task = (info as any).task;
+                        const model =  (info as any).model;
+                        this.readyCallbacks.forEach(callback => callback(task, model));
                     }
                 }
             },
