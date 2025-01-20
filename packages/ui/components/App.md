@@ -26,13 +26,20 @@ Example:
             <Window title="Window 3" x={250} y={300} onClose={() => { }} >
                 <Box>
                     <Text label='Type:' />
-                    <Input defaultValue="Input" onChange={(value) => { setText(value)}}  />
+                    <Input defaultValue="Input" onChange={(value) => { }}  />
                 </Box>
                 <Box type='inset' vertical>
                     <Text label='Box inset' />
                     <ProgressBar progress={50} max={100} />
                 </Box>
             </Window>
+
+             
+            <Window title="Lists" x={450} y={400} onClose={() => setW4(false)} >
+                <ListView items={['Item 1', 'Item 2', 'Item 3']} selectedIndex={0} onSelect={(i)=>{}} />
+                <Dropdown options={['Option 1', 'Option 2', 'Option 3']} selectedOption={0} onChange={(i)=>{}} />
+            </Window>
+        
             
         </WindowProvider>
     </App>

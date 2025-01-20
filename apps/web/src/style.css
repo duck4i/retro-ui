@@ -35,3 +35,8 @@ a:hover {
 .demo h1 {
   color: silver;
 }
+
+.footer {
+  display: flex;
+  gap: 1rem;
+}

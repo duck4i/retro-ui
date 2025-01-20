@@ -173,7 +173,7 @@ const InferenceWindow = ({ onClose }: InferenceProps) => {
                     }
                 </Scrollbar>
                 <Box width={"100%"} height={50} border="none">
-                    <InputBox defaultValue={question} onChange={(value) => {
+                    <InputBox value={question} onChange={(value) => {
                         setQuestion(value)
                         setEnabled(value.length > 0)
                     }} />
