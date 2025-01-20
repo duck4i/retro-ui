@@ -43,7 +43,7 @@ export class Pipeline {
     static instance: Pipeline;
     pipeline: TextGenerationPipeline | null;
     downloadCallbacks: DownloadCallback[] = [];
-    readyCallbacks: TaskReadyCallback[] = [];    
+    readyCallbacks: TaskReadyCallback[] = [];
 
     constructor() {
         this.pipeline = null;
@@ -82,9 +82,9 @@ export class Pipeline {
                             this.downloadCallbacks.forEach(callback => callback(progress, name, url));
                         }
                     }
-                    if (info.status === 'ready'){
+                    if (info.status === 'ready') {
                         const task = (info as any).task;
-                        const model =  (info as any).model;
+                        const model = (info as any).model;
                         this.readyCallbacks.forEach(callback => callback(task, model));
                     }
                 }

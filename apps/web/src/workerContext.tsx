@@ -62,6 +62,7 @@ export const WorkerProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     const downloadModel = useCallback((model: Model, deviceMode: Device) => {
+        setError('');
         workerRef.current?.postMessage({ type: MessageType.Init, model: model, device: deviceMode });
     }, []);
 

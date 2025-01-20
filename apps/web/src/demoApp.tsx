@@ -1,4 +1,4 @@
-import { App, Box, Button, CheckBoxGroup, Dropdown, ProgressBar, Text, Window, WindowProvider } from '@duck4i/retro-ui';
+import { App, Box, Button, CheckBoxGroup, Dropdown, InputBox, ProgressBar, Scrollbar, Text, Window, WindowProvider } from '@duck4i/retro-ui';
 import '@duck4i/retro-ui/style.css';
 import { useEffect, useState } from 'react';
 import { Device, Model } from './pipeline';
@@ -111,30 +111,54 @@ const SelectModelWindow = ({ onSelect }: SelectModelProps) => {
     )
 }
 
-const InferenceWindow = () => {
+interface InferenceProps {
+    onClose: () => void;
+}
 
-    const [answer, setAnswer] = useState('');
+const InferenceWindow = ({ onClose }: InferenceProps) => {
+    const { inferenceOutput, startInference } = useWorker()!;
 
-    const onClose = () => {
+    const [enabled, setEnabled] = useState(true);
+    const [question, setQuestion] = useState('How many ducks can one own?');
 
-    }
+    enum Type { Question, Answer };
+    interface Info { type: Type; content: string; }
+    const [answers, setAnswers] = useState<Info[]>([]);
 
     const onInference = () => {
-        setAnswer("Inference");
+        setEnabled(false);
+        setQuestion('');
+        setAnswers([...answers, { type: Type.Question, content: question }]);
+        startInference(question);
     }
 
     useEffect(() => {
-
-    }, [])
+        if (inferenceOutput) {
+            setAnswers([...answers, { type: Type.Answer, content: inferenceOutput }]);
+            setEnabled(true);
+        }
+    }, [inferenceOutput])
 
     return (
-        <Window title="Inference" location='center' width={480} onClose={onClose} >
+        <Window title="Inference" location='center' width={700} height={550} onClose={onClose} >
             <Box vertical border="none">
-                <Text label='Inference' color='silver' backgroundColor='green' />
-                <br />
-                <Text label={answer} />
-                <br />
-                <Button label='Inference' onClick={onInference} />
+                <Scrollbar width={"100%"} height={430} backgroundColor='cyan' vertical alwaysShowVertical>
+                    {
+                        answers.map((answer, index) => {
+                            return (
+                                <Text key={index} label={answer.content} backgroundColor={answer.type === Type.Question ? 'magenta' : 'cyan'} color={answer.type === Type.Question ? 'white' : 'black'} />
+                            )
+                        })
+                    }
+                </Scrollbar>
+                <Box width={"100%"} height={50} border="none">
+                    <InputBox defaultValue={question} onChange={(value) => {
+                        setQuestion(value)
+                        setEnabled(value.length > 0)
+                    }} />
+                    <br />
+                    <Button label='Send' onClick={onInference} width={75} disabled={!enabled} />
+                </Box>
             </Box>
         </Window>
     )
@@ -143,13 +167,13 @@ const InferenceWindow = () => {
 const RetroLlama = () => {
 
     enum State { Welome, Select, Download, Inference, Error };
-    const [state, setState] = useState(State.Welome);
+    const [state, setState] = useState(State.Inference);
     const [model, setModel] = useState<Model>(Model.Smol);
     const [device, setDevice] = useState<Device>('wasm');
     const { error, ready } = useWorker()!;
 
     useEffect(() => {
-        if (ready){
+        if (ready) {
             setState(State.Inference);
         }
         if (error) {
@@ -178,8 +202,8 @@ const RetroLlama = () => {
                 {state === State.Welome && <WelcomeWindow onProceed={onWelcomeNext} />}
                 {state === State.Select && <SelectModelWindow onSelect={onModelSelected} />}
                 {state === State.Download && <DownloadModelWindow mode={device} model={model} />}
-                {state === State.Inference && <InferenceWindow />}
-                {state === State.Error && <ErrorWindow error={error ?? "unknown"} onClose={onErrorClose}/>}
+                {state === State.Inference && <InferenceWindow onClose={onErrorClose} />}
+                {state === State.Error && <ErrorWindow error={error ?? "unknown"} onClose={onErrorClose} />}
             </WindowProvider>
 
             <div style={{ position: 'absolute', bottom: 0, left: 5 }}>
