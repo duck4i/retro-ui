@@ -1,5 +1,11 @@
 # web
 
+## 0.4.3
+
+### Patch Changes
+
+- llama model fix
+
 ## 0.4.2
 
 ### Patch Changes
