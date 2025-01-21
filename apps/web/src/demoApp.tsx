@@ -112,10 +112,11 @@ const SelectModelWindow = ({ onSelect }: SelectModelProps) => {
 }
 
 interface InferenceProps {
+    title: string;
     onClose: () => void;
 }
 
-const InferenceWindow = ({ onClose }: InferenceProps) => {
+const InferenceWindow = ({ title, onClose }: InferenceProps) => {
     const { inferenceOutput, inferenceStream, startInference } = useWorker()!;
 
     const [enabled, setEnabled] = useState(true);
@@ -161,7 +162,7 @@ const InferenceWindow = ({ onClose }: InferenceProps) => {
     }, [inferenceStream]);
 
     return (
-        <Window title="Inference" location='center' width={700} height={550} onClose={onClose} >
+        <Window title={`${title}`} location='center' width={700} height={550} onClose={onClose} >
             <Box vertical border="none">
                 <Scrollbar width={"100%"} height={430} backgroundColor='cyan' vertical alwaysShowVertical>
                     {
@@ -191,14 +192,16 @@ const RetroLlama = () => {
     const [state, setState] = useState(State.Welome);
     const [model, setModel] = useState<Model>(Model.Smol);
     const [device, setDevice] = useState<Device>('wasm');
-    const { error, ready } = useWorker()!;
+    const { error, ready, modelName } = useWorker()!;
 
     useEffect(() => {
-        if (ready) {
-            setState(State.Inference);
-        }
+        //  Sometimes a model will throw an error but still be loaded and ready to use
+        //  in which case we allow it to proceed to the inference window.
         if (error) {
             setState(State.Error);
+        }
+        if (ready) {
+            setState(State.Inference);
         }
     }, [error, ready]);
 
@@ -223,7 +226,7 @@ const RetroLlama = () => {
                 {state === State.Welome && <WelcomeWindow onProceed={onWelcomeNext} />}
                 {state === State.Select && <SelectModelWindow onSelect={onModelSelected} />}
                 {state === State.Download && <DownloadModelWindow mode={device} model={model} />}
-                {state === State.Inference && <InferenceWindow onClose={onErrorClose} />}
+                {state === State.Inference && <InferenceWindow title={modelName} onClose={onErrorClose} />}
                 {state === State.Error && <ErrorWindow error={error ?? "unknown"} onClose={onErrorClose} />}
             </WindowProvider>
 

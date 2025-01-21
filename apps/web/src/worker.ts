@@ -11,7 +11,7 @@ self.onmessage = async (event) => {
         case MessageType.Init: {
             const { model, device } = message;
             try {
-                pipeline = Pipeline.getInstance();
+                pipeline = new Pipeline();
                 pipeline.addDownloadCallback((progress, file, modelUrl) => {
                     self.postMessage({ type: MessageType.OnDownload, progress, file, modelUrl });
                 });

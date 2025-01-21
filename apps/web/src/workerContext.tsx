@@ -29,7 +29,7 @@ export const WorkerProvider = ({ children }: { children: React.ReactNode }) => {
 
         const onMessage = (event: MessageEvent) => {
             const message = event.data as WorkerResponse;
-            console.log('[Worker] Message:', message);
+            console.log('[WorkerCtx] Message:', message);
 
             switch (message.type) {
                 case MessageType.OnDownload: {

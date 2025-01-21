@@ -31,7 +31,7 @@ const modelInfos: Record<string, ModelInfo> = {
         dType: 'q4'
     },
     [Model.LLama]: {
-        url: 'Xenova/Phi-3-mini-4k-instruct',
+        url: 'onnx-community/Llama-3.2-1B-Instruct',
         dType: 'q8',
     }
 };
@@ -48,13 +48,6 @@ export class Pipeline {
 
     constructor() {
         this.pipeline = null;
-    }
-
-    static getInstance() {
-        if (!Pipeline.instance) {
-            Pipeline.instance = new Pipeline();
-        }
-        return Pipeline.instance;
     }
 
     addDownloadCallback(callback: DownloadCallback) {
@@ -113,6 +106,8 @@ export class Pipeline {
             max_new_tokens: 128,
             do_sample: false,
             return_full_text: false,
+            temperature: 0.6,
+            top_k: 35,
             streamer: streamer
         });
         return (out[0] as any).generated_text;
