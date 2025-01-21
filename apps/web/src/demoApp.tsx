@@ -117,7 +117,7 @@ interface InferenceProps {
 }
 
 const InferenceWindow = ({ title, onClose }: InferenceProps) => {
-    const { inferenceOutput, inferenceStream, startInference, error } = useWorker()!;
+    const { inferenceOutput, inferenceStream, startInference } = useWorker()!;
 
     const [enabled, setEnabled] = useState(true);
     const [question, setQuestion] = useState('How many ducks can one own?');
